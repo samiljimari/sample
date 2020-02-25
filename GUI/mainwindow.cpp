@@ -16,10 +16,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     filemodel = new QFileSystemModel(this);
     filemodel->setFilter(QDir::NoDotAndDotDot | QDir::Files);
+
     filemodel->setRootPath(sPath);
 
-    //ui->listView_2->setModel(filemodel);
+    QStringList filters;
+    filters << "*.jpg";
 
+    filemodel->setNameFilters(filters);
+    filemodel->setNameFilterDisables(false);
 }
 
 MainWindow::~MainWindow()
