@@ -5,7 +5,6 @@
 #include <QFile>
 #include <QFileDialog>
 
-
 namespace Ui {
 class MainWindow;
 }
@@ -24,6 +23,8 @@ private slots:
     void on_pushButton_clicked();
 
     void on_listView_activated(const QModelIndex &index);
+
+    void on_pushButton_5_clicked();
 
 private:
     Ui::MainWindow *ui;
