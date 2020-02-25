@@ -11,8 +11,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     QString sPath = "C:/";
-    //dirmodel = new QFileSystemModel(this);
-    //dirmodel->setRootPath(sPath);
 
     filemodel = new QFileSystemModel(this);
     filemodel->setFilter(QDir::NoDotAndDotDot | QDir::Files);
@@ -44,6 +42,7 @@ void MainWindow::on_pushButton_5_clicked()
                             "Select one or more files to open",
                             "/home",
                             "Images (*.names)");
+
     filemodel = new QFileSystemModel(this);
     filemodel->setReadOnly(false);
 
