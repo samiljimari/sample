@@ -4,6 +4,10 @@
 #include <QMainWindow>
 #include <QFile>
 #include <QFileDialog>
+#include <QtGui>
+#include <QtCore>
+#include <QFileSystemModel>
+
 
 namespace Ui {
 class MainWindow;
@@ -28,6 +32,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QFileSystemModel *model;
 };
 
 #endif // MAINWINDOW_H
