@@ -24,8 +24,6 @@ public:
 private slots:
     void on_treeView_activated(const QModelIndex &index);
 
-    void on_pushButton_clicked();
-
     void on_listView_activated(const QModelIndex &index);
 
     void on_pushButton_5_clicked();

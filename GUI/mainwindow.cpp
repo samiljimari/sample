@@ -19,8 +19,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     filemodel->setRootPath(sPath);
 
-    QStringList filters;
+    QStringList filters; //filters to censor unwanted files from Listview
     filters << "*.jpg";
+    filters << "*.png";
 
     filemodel->setNameFilters(filters);
     filemodel->setNameFilterDisables(false);
@@ -29,17 +30,6 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::on_pushButton_clicked()
-{
-    QStringList image_ = QFileDialog::getOpenFileNames(
-                            this,
-                            "Select a folder to open",
-                            "/home",
-                            "Images (*.png *.xpm *.jpg)");
-
-
 }
 
 void MainWindow::on_treeView_activated(const QModelIndex &index)
@@ -53,7 +43,13 @@ void MainWindow::on_pushButton_5_clicked()
                             this,
                             "Select one or more files to open",
                             "/home",
-                            "Images (*.txt)");
+                            "Images (*.names)");
+    filemodel = new QFileSystemModel(this);
+    filemodel->setReadOnly(false);
+
+    QStringListModel *model = new QStringListModel();
+    model->setStringList(class_);
+    ui->listView->setModel(model);
 }
 
 void MainWindow::on_listView_activated(const QModelIndex &index)
@@ -92,3 +88,5 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
     ui->listView_2->setRootIndex(filemodel->setRootPath(sPath));
     ui->listView_2->setModel(filemodel);
 }
+
+
