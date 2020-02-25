@@ -30,9 +30,16 @@ private slots:
 
     void on_pushButton_5_clicked();
 
+    void on_pushButton_7_clicked();
+
+    void on_listView_2_activated(const QModelIndex &index);
+
+    void on_treeView_clicked(const QModelIndex &index);
+
 private:
     Ui::MainWindow *ui;
-    QFileSystemModel *model;
+    QFileSystemModel *dirmodel;
+    QFileSystemModel *filemodel;
 };
 
 #endif // MAINWINDOW_H
