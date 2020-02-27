@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include <QStandardItem>
 #include <QFileSystemModel>
+#include <QFileInfo>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -11,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     QString sPath = "C:/";
+
 
     filemodel = new QFileSystemModel(this);
     filemodel->setFilter(QDir::NoDotAndDotDot | QDir::Files);
@@ -23,6 +25,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     filemodel->setNameFilters(filters);
     filemodel->setNameFilterDisables(false);
+
+    scene = new QGraphicsScene(this);
+    //scene->addText("Hello, world!");
+
+    QGraphicsView view;
+    ui->graphicsView->setBackgroundBrush(QImage("C:/Users/Sami Ljimari/Desktop/image test folder/pic1.jpg"));
+    ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
+    ui->graphicsView->show();
+
+    //ui->graphicsView->setScene(scene);
+   // QString imagePath = "C:/Users/Sami Ljimari/Desktop/image test folder/pic1.jpg";
 }
 
 MainWindow::~MainWindow()
@@ -89,3 +102,46 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
 }
 
 
+
+void MainWindow::on_graphicsView_rubberBandChanged(const QRect &viewportRect, const QPointF &fromScenePoint, const QPointF &toScenePoint)
+{
+
+}
+
+void MainWindow::on_pushButton_clicked() // image use button
+{
+    QString defaultPath("C:/Users/Sami Ljimari/Desktop/image test folder");
+
+    QString imagePath = QFileDialog::getOpenFileName(0, "Open File", defaultPath, tr("JPG (*.jpg *.jpeg);;PNG (*.png)"));
+
+    imageObject = new QImage();
+    imageObject->load(imagePath);
+
+    image = QPixmap::fromImage(*imageObject);
+
+    scene = new QGraphicsScene(this);
+    scene->addPixmap(image);
+    scene->setSceneRect(image.rect());
+    ui->graphicsView->setScene(scene);
+
+}
+
+void MainWindow::on_pushButton_8_clicked() //image save button
+{
+
+}
+
+void MainWindow::on_listView_2_doubleClicked(const QModelIndex &index) // when double clicked displays the image
+{
+    QString pathOfIndex = absoluteFilePath(index);
+
+    imageObject = new QImage();
+    imageObject->load(pathOfIndex);
+
+    image = QPixmap::fromImage(*imageObject);
+
+    scene = new QGraphicsScene(this);
+    scene->addPixmap(image);
+    scene->setSceneRect(image.rect());
+    ui->graphicsView->setScene(scene);
+}
