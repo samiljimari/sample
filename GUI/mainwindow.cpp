@@ -4,48 +4,25 @@
 #include <QStandardItem>
 #include <QFileSystemModel>
 #include <QFileInfo>
+#include <QtQuick/QQuickPaintedItem>
+#include <QList>
+#include <QVector>
+#include <QObject>
+#include <QGraphicsView>
+#include <QGraphicsTextItem>
+#include <QGraphicsScene>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
-
-    QString sPath = "C:/";
-
-
-    filemodel = new QFileSystemModel(this);
-    filemodel->setFilter(QDir::NoDotAndDotDot | QDir::Files);
-
-    filemodel->setRootPath(sPath);
-
-    QStringList filters; //filters to censor unwanted files from Listview
-    filters << "*.jpg";
-    filters << "*.png";
-
-    filemodel->setNameFilters(filters);
-    filemodel->setNameFilterDisables(false);
-
-    scene = new QGraphicsScene(this);
-    //scene->addText("Hello, world!");
-
-    QGraphicsView view;
-    ui->graphicsView->setBackgroundBrush(QImage("C:/Users/Sami Ljimari/Desktop/image test folder/pic1.jpg"));
-    ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
-    ui->graphicsView->show();
-
-    //ui->graphicsView->setScene(scene);
-   // QString imagePath = "C:/Users/Sami Ljimari/Desktop/image test folder/pic1.jpg";
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::on_treeView_activated(const QModelIndex &index)
-{
-
 }
 
 void MainWindow::on_pushButton_5_clicked()
@@ -54,7 +31,7 @@ void MainWindow::on_pushButton_5_clicked()
                             this,
                             "Select one or more files to open",
                             "/home",
-                            "Images (*.names)");
+                            "Classes (*.names)");
 
     filemodel = new QFileSystemModel(this);
     filemodel->setReadOnly(false);
@@ -69,39 +46,32 @@ void MainWindow::on_listView_activated(const QModelIndex &index)
 
 }
 
-void MainWindow::on_pushButton_7_clicked()
+void MainWindow::on_pushButton_7_clicked() // image browse / select button
 {
-    QFileDialog dialog(this);
+    QStringList images = QFileDialog::getOpenFileNames(
+                                this,
+                                "Select one or more files to open",
+                                "/home",
+                                "Images (*.jpg *.jpeg);;PNG (*.png)");
 
-    dialog.setFileMode(QFileDialog::Directory);
+    filemodel = new QFileSystemModel(this);
+    filemodel->setReadOnly(true);
+    ui->listView->setEditTriggers(QAbstractItemView::NoEditTriggers); //To disable editing
+    QStringListModel *model = new QStringListModel();
+    model->setStringList(images);
+    ui->listView_2->setModel(model);
 
-    QString _OutputFolder = QFileDialog::getExistingDirectory(0, ("Select Output Folder"), QDir::currentPath());
+    //filemodel = new QFileSystemModel(this);
+    //filemodel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
+    //filemodel->setReadOnly(true);
 
-    dirmodel = new QFileSystemModel(this);
-    dirmodel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
-    dirmodel->setReadOnly(true);
-    ui->treeView->setModel(dirmodel);
-    QModelIndex index = dirmodel->index(_OutputFolder);
-    ui->treeView->expand(index);
-    ui->treeView->scrollTo(index);
-    ui->treeView->setCurrentIndex(index);
-    ui->treeView->resizeColumnToContents(0);
 
 }
 
-void MainWindow::on_listView_2_activated(const QModelIndex &index)
+void MainWindow::on_listView_2_activated(const QModelIndex &index) // image file display pane
 {
 
 }
-
-void MainWindow::on_treeView_clicked(const QModelIndex &index)
-{
-    QString sPath = dirmodel->fileInfo(index).absoluteFilePath();
-    ui->listView_2->setRootIndex(filemodel->setRootPath(sPath));
-    ui->listView_2->setModel(filemodel);
-}
-
-
 
 void MainWindow::on_graphicsView_rubberBandChanged(const QRect &viewportRect, const QPointF &fromScenePoint, const QPointF &toScenePoint)
 {
@@ -131,17 +101,42 @@ void MainWindow::on_pushButton_8_clicked() //image save button
 
 }
 
-void MainWindow::on_listView_2_doubleClicked(const QModelIndex &index) // when double clicked displays the image
+void MainWindow::on_listView_2_clicked(const QModelIndex &index) //display image when clicked on listview image pane
 {
-    QString pathOfIndex = absoluteFilePath(index);
+    QList<QString> path_list;
+    QString filePath;
+    QModelIndex parentIndex = filemodel->index(filePath);
+    int numRows = filemodel->rowCount(parentIndex);
+
+    for (int row = 0; row < numRows; ++row) //populating index values with listview items
+    {
+        QModelIndex childIndex = filemodel->index(row, 0, parentIndex);
+        QString path = filemodel->data(childIndex).toString();
+        path_list.append(path);
+    }
+    QString imagePath;
+
+    for(qint32 i = 0; i < path_list.size(); i++) //traversing through list to find index path
+       {
+        if(path_list.at(i) == index.data())
+        {
+            imagePath = path_list.at(i);
+        }
+       }
+    QString defaultPath("C:/Users/Sami Ljimari/Desktop/image test folder/pic1.jpg");
+
+    connect(ui->listView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(fetch()));
 
     imageObject = new QImage();
-    imageObject->load(pathOfIndex);
+
+    imageObject->load(imagePath);
 
     image = QPixmap::fromImage(*imageObject);
 
     scene = new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
+
+    ui->label_5->setText(imagePath); //if it's an existing one
+
 }

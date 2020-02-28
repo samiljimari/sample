@@ -35,8 +35,6 @@ private slots:
 
     void on_listView_2_activated(const QModelIndex &index);
 
-    void on_treeView_clicked(const QModelIndex &index);
-
     void on_graphicsView_rubberBandChanged(const QRect &viewportRect, const QPointF &fromScenePoint, const QPointF &toScenePoint);
 
     void on_pushButton_clicked();
@@ -44,6 +42,8 @@ private slots:
     void on_pushButton_8_clicked();
 
     void on_listView_2_doubleClicked(const QModelIndex &index);
+
+    void on_listView_2_clicked(const QModelIndex &index);
 
 private:
     Ui::MainWindow *ui;
@@ -54,6 +54,7 @@ private:
     QGraphicsRectItem *rectangle;
     QPixmap image;
     QImage  *imageObject;
+    QObject sender;
 
 };
 

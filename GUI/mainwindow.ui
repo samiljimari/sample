@@ -14,26 +14,13 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTreeView" name="treeView">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>110</y>
-      <width>281</width>
-      <height>281</height>
-     </rect>
-    </property>
-    <property name="sortingEnabled">
-     <bool>true</bool>
-    </property>
-   </widget>
    <widget class="QListView" name="listView">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>440</y>
+      <y>390</y>
       <width>551</width>
-      <height>281</height>
+      <height>331</height>
      </rect>
     </property>
    </widget>
@@ -116,7 +103,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>410</y>
+      <y>360</y>
       <width>47</width>
       <height>13</height>
      </rect>
@@ -129,7 +116,7 @@
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>400</y>
+      <y>350</y>
       <width>81</width>
       <height>31</height>
      </rect>
@@ -197,72 +184,59 @@
      </rect>
     </property>
     <property name="text">
-     <string>Browse</string>
+     <string>Browse and choose files</string>
     </property>
    </widget>
    <widget class="QListView" name="listView_2">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>110</y>
-      <width>261</width>
-      <height>231</height>
+      <x>10</x>
+      <y>90</y>
+      <width>551</width>
+      <height>251</height>
      </rect>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::DoubleClicked|QAbstractItemView::SelectedClicked</set>
     </property>
     <property name="alternatingRowColors">
      <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_6">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>90</y>
-      <width>191</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Treeview path of your selected folder:</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_7">
-    <property name="geometry">
-     <rect>
-      <x>300</x>
-      <y>90</y>
-      <width>121</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Listview of your folder:</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>300</x>
-      <y>350</y>
-      <width>121</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Use Image</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_8">
     <property name="geometry">
      <rect>
       <x>440</x>
-      <y>350</y>
+      <y>10</y>
       <width>121</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>Save Image</string>
+     <string>Crop &amp; Save</string>
+    </property>
+   </widget>
+   <widget class="QGraphicsView" name="graphicsView_2">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>10</y>
+      <width>231</width>
+      <height>51</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>20</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
     </property>
    </widget>
   </widget>
