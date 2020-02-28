@@ -1,6 +1,6 @@
+#include "functions.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "functions.h"
 #include <QFileDialog>
 #include <QStandardItem>
 #include <QFileSystemModel>
@@ -90,10 +90,10 @@ void MainWindow::on_pushButton_8_clicked() //image save button
 void MainWindow::on_listWidget_clicked(const QModelIndex &index) // list widget / image file pane
 {
     QList <QListWidgetItem*> items=ui->listWidget->selectedItems();
-    QString list = listTraversal(items);
+    QString imagePath = listTraversal(items,"0");
     //add external function to perform the image loop
     scene = new QGraphicsScene(this);
-    scene->addPixmap(list);
+    scene->addPixmap(imagePath);
     scene->setSceneRect(image.rect());
     ui->graphicsView->setScene(scene);
 }
