@@ -45,6 +45,8 @@ private slots:
 
     void on_listView_2_clicked(const QModelIndex &index);
 
+    void on_listWidget_clicked(const QModelIndex &index);
+
 private:
     Ui::MainWindow *ui;
     QFileSystemModel *dirmodel;

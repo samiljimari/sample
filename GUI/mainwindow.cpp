@@ -11,6 +11,7 @@
 #include <QGraphicsView>
 #include <QGraphicsTextItem>
 #include <QGraphicsScene>
+#include <QListWidget>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,7 +26,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_5_clicked()
+void MainWindow::on_pushButton_5_clicked() // class select / browse button
 {
     QStringList class_ = QFileDialog::getOpenFileNames(
                             this,
@@ -56,10 +57,10 @@ void MainWindow::on_pushButton_7_clicked() // image browse / select button
 
     filemodel = new QFileSystemModel(this);
     filemodel->setReadOnly(true);
-    ui->listView->setEditTriggers(QAbstractItemView::NoEditTriggers); //To disable editing
+    ui->listWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); //To disable editing
     QStringListModel *model = new QStringListModel();
     model->setStringList(images);
-    ui->listView_2->setModel(model);
+    ui->listWidget->addItems(images);
 
     //filemodel = new QFileSystemModel(this);
     //filemodel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
@@ -68,7 +69,7 @@ void MainWindow::on_pushButton_7_clicked() // image browse / select button
 
 }
 
-void MainWindow::on_listView_2_activated(const QModelIndex &index) // image file display pane
+void MainWindow::on_listView_2_activated(const QModelIndex &index) // image display pane
 {
 
 }
@@ -78,65 +79,25 @@ void MainWindow::on_graphicsView_rubberBandChanged(const QRect &viewportRect, co
 
 }
 
-void MainWindow::on_pushButton_clicked() // image use button
-{
-    QString defaultPath("C:/Users/Sami Ljimari/Desktop/image test folder");
-
-    QString imagePath = QFileDialog::getOpenFileName(0, "Open File", defaultPath, tr("JPG (*.jpg *.jpeg);;PNG (*.png)"));
-
-    imageObject = new QImage();
-    imageObject->load(imagePath);
-
-    image = QPixmap::fromImage(*imageObject);
-
-    scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
-
-}
-
 void MainWindow::on_pushButton_8_clicked() //image save button
 {
 
 }
 
-void MainWindow::on_listView_2_clicked(const QModelIndex &index) //display image when clicked on listview image pane
+
+
+void MainWindow::on_listWidget_clicked(const QModelIndex &index) // list widget / image file pane
 {
-    QList<QString> path_list;
-    QString filePath;
-    QModelIndex parentIndex = filemodel->index(filePath);
-    int numRows = filemodel->rowCount(parentIndex);
-
-    for (int row = 0; row < numRows; ++row) //populating index values with listview items
+    QList <QListWidgetItem*> items=ui->listWidget->selectedItems();
+    for(int j=0;j<items.count();j++)
     {
-        QModelIndex childIndex = filemodel->index(row, 0, parentIndex);
-        QString path = filemodel->data(childIndex).toString();
-        path_list.append(path);
+        QString list= items.at(j)->text();
+        ui->listWidget->insertItem(j,list);
     }
-    QString imagePath;
-
-    for(qint32 i = 0; i < path_list.size(); i++) //traversing through list to find index path
-       {
-        if(path_list.at(i) == index.data())
-        {
-            imagePath = path_list.at(i);
-        }
-       }
-    QString defaultPath("C:/Users/Sami Ljimari/Desktop/image test folder/pic1.jpg");
-
-    connect(ui->listView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(fetch()));
-
-    imageObject = new QImage();
-
-    imageObject->load(imagePath);
-
-    image = QPixmap::fromImage(*imageObject);
-
+    //add external function to perform the image loop
+    QString list;
     scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
+    scene->addPixmap(list);
     scene->setSceneRect(image.rect());
-
-    ui->label_5->setText(imagePath); //if it's an existing one
-
+    ui->graphicsView->setScene(scene);
 }
