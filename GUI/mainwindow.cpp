@@ -14,6 +14,8 @@
 #include <QGraphicsScene>
 #include <QListWidget>
 
+//^ libraries,classes,and header files
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -22,18 +24,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 }
 
-MainWindow::~MainWindow()
+MainWindow::~MainWindow() //ui termiantion
 {
     delete ui;
 }
 
 void MainWindow::on_pushButton_5_clicked() // class select / browse button
 {
-    QStringList class_ = QFileDialog::getOpenFileNames(
-                            this,
+    QStringList class_ = QFileDialog::getOpenFileNames(  //open up file browser with QFileDialog
+                            this,                         //and assign selected file paths to a QStringList of images variable
                             "Select one or more files to open",
-                            "/home",
-                            "Classes (*.names)");
+                            "/home",                      // default directory
+                            "Classes (*.names)");         //filetypes elligible to be selected by user
 
     filemodel = new QFileSystemModel(this);
     filemodel->setReadOnly(false);
@@ -50,23 +52,19 @@ void MainWindow::on_listView_activated(const QModelIndex &index)
 
 void MainWindow::on_pushButton_7_clicked() // image browse / select button
 {
-    QStringList images = QFileDialog::getOpenFileNames(
-                                this,
+    QStringList images = QFileDialog::getOpenFileNames(   //open up file browser with QFileDialog
+                                this,                     //and assign selected file paths to a QStringList of images variable
                                 "Select one or more files to open",
-                                "/home",
-                                "Images (*.jpg *.jpeg);;PNG (*.png)");
+                                "/home",     // default directory
+                                "Images (*.jpg *.jpeg);;PNG (*.png)"); //filetypes elligible to be selected by user
 
-    filemodel = new QFileSystemModel(this);
-    filemodel->setReadOnly(true);
-    ui->listWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); //To disable editing
-    QStringListModel *model = new QStringListModel();
-    model->setStringList(images);
-    ui->listWidget->addItems(images);
-
-    //filemodel = new QFileSystemModel(this);
-    //filemodel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
-    //filemodel->setReadOnly(true);
-
+    filemodel = new QFileSystemModel(this); //create a new filemodel
+    filemodel->setReadOnly(true); //Filter to disable editing
+    filemodel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs); //remove unwanted directory paths
+    ui->listWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); //To disable editing of file names
+    QStringListModel *model = new QStringListModel(); // create a string list model which will store selected image file paths
+    model->setStringList(images); // fill the model with file paths that user has selected
+    ui->listWidget->addItems(images); // display users selection
 
 }
 
@@ -89,11 +87,15 @@ void MainWindow::on_pushButton_8_clicked() //image save button
 
 void MainWindow::on_listWidget_clicked(const QModelIndex &index) // list widget / image file pane
 {
-    QList <QListWidgetItem*> items=ui->listWidget->selectedItems();
-    QString imagePath = listTraversal(items,"0");
-    //add external function to perform the image loop
-    scene = new QGraphicsScene(this);
-    scene->addPixmap(imagePath);
-    scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
+    QList <QListWidgetItem*> items=ui->listWidget->selectedItems(); //input file paths from list widget to QList
+
+    QString imagePath = listTraversal(items,"0"); // Use traversal function on selected item from list widget
+
+    scene = new QGraphicsScene(this); // create new graphics scene
+
+    scene->addPixmap(imagePath); // convert imagepath text into a pixmap scene
+
+    scene->setSceneRect(image.rect()); // create a rectangle on graphics view for the image
+
+    ui->graphicsView->setScene(scene); // fill graphics view with the image
 }
