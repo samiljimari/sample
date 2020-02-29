@@ -57,6 +57,7 @@ private:
     QPixmap image;
     QImage  *imageObject;
     QObject sender;
+    QStringList *model;
 
 };
 

@@ -13,6 +13,10 @@
 #include <QGraphicsTextItem>
 #include <QGraphicsScene>
 #include <QListWidget>
+#include <QTextStream>
+#include <iostream>
+#include <QMessageBox>
+#include <QStringListModel>
 
 //^ libraries,classes,and header files
 
@@ -31,22 +35,37 @@ MainWindow::~MainWindow() //ui termiantion
 
 void MainWindow::on_pushButton_5_clicked() // class select / browse button
 {
-    QStringList class_ = QFileDialog::getOpenFileNames(  //open up file browser with QFileDialog
+    QString class_ = QFileDialog::getOpenFileName(  //open up file browser with QFileDialog
                             this,                         //and assign selected file paths to a QStringList of images variable
                             "Select one or more files to open",
                             "/home",                      // default directory
-                            "Classes (*.names)");         //filetypes elligible to be selected by user
+                            "Classes (*.names);;TXT Files(*.txt)"); //filetypes elligible to be selected by user
 
-    filemodel = new QFileSystemModel(this);
-    filemodel->setReadOnly(false);
+    QStringList stringList; //stringlist for class file data
+    QStringListModel *model; // model to store data in
 
-    QStringListModel *model = new QStringListModel();
-    model->setStringList(class_);
-    ui->listView->setModel(model);
-}
+    // Create model
+    model = new QStringListModel(this);
 
-void MainWindow::on_listView_activated(const QModelIndex &index)
-{
+    // open the file
+    QFile textFile(class_);
+    if(!textFile.open(QIODevice::ReadOnly)) {
+        QMessageBox::information(0,"Error",textFile.errorString());
+    }
+
+    QTextStream textStream(&textFile);
+    while (true)  // teststream to read from file
+    {
+        QString line = textStream.readLine();
+        if (line.isNull())
+            break;
+        else
+            stringList.append(line); // populate the stringlist
+    }
+
+    model->setStringList(stringList);  // Populate the model
+
+    ui->listView->setModel(model);  // Glue model and view together
 
 }
 
