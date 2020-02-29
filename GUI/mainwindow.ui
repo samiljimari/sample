@@ -235,6 +235,9 @@
       <height>291</height>
      </rect>
     </property>
+    <property name="alternatingRowColors">
+     <bool>true</bool>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -248,11 +251,19 @@
    </property>
    <widget class="QMenu" name="menuEXIT">
     <property name="title">
-     <string>help</string>
+     <string>options</string>
     </property>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuinfo">
+    <property name="title">
+     <string>info</string>
+    </property>
+    <addaction name="actionread_me_2"/>
+    <addaction name="actionabout_2"/>
+   </widget>
    <addaction name="menuEXIT"/>
+   <addaction name="menuinfo"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -270,6 +281,26 @@
    </property>
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionread_me">
+   <property name="text">
+    <string>read me</string>
+   </property>
+  </action>
+  <action name="actionabout">
+   <property name="text">
+    <string>about</string>
+   </property>
+  </action>
+  <action name="actionread_me_2">
+   <property name="text">
+    <string>read me</string>
+   </property>
+  </action>
+  <action name="actionabout_2">
+   <property name="text">
+    <string>about</string>
    </property>
   </action>
  </widget>
