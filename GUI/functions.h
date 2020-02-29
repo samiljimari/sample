@@ -17,7 +17,8 @@ QString listTraversal(QList <QListWidgetItem*> items, QString list)
 
 void errorMessage(QFile textFile) // function to check for contents of a txt file, if empty, error message is displayed
 {
-    if(!textFile.open(QIODevice::ReadOnly)) {
+    if(!textFile.open(QIODevice::ReadOnly))
+    {
         QMessageBox::information(0,"Error",textFile.errorString());
     }
 }
