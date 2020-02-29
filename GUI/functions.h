@@ -15,14 +15,14 @@ QString listTraversal(QList <QListWidgetItem*> items, QString list)
     return list;
 }
 
-void errorMessage(QFile textFile)
+void errorMessage(QFile textFile) // function to check for contents of a txt file, if empty, error message is displayed
 {
     if(!textFile.open(QIODevice::ReadOnly)) {
         QMessageBox::information(0,"Error",textFile.errorString());
     }
 }
 
-QStringList populateList(QStringList stringList, QTextStream textStream)
+QStringList populateList(QStringList stringList, QTextStream textStream) // function to populate a list of class file contents
 {
     while (true)
     {

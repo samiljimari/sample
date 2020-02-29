@@ -49,8 +49,9 @@ void MainWindow::on_pushButton_5_clicked() // class select / browse button
 
     // open the file
     QFile textFile(class_);
-    if(!textFile.open(QIODevice::ReadOnly)) {
-        QMessageBox::information(0,"Error",textFile.errorString());
+    if(!textFile.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::information(0,"Error",textFile.errorString()); // if file is empty prompt the user with error
     }
 
     QTextStream textStream(&textFile);
