@@ -20,6 +20,7 @@
 
 //^ libraries,classes,and header files
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -85,12 +86,6 @@ void MainWindow::on_pushButton_7_clicked() // image browse / select button
     QStringListModel *model = new QStringListModel(); // create a string list model which will store selected image file paths
     model->setStringList(images); // fill the model with file paths that user has selected
     ui->listWidget->addItems(images); // display users selection
-
-}
-
-void MainWindow::on_listView_2_activated(const QModelIndex &index) // image display pane
-{
-
 }
 
 void MainWindow::on_graphicsView_rubberBandChanged(const QRect &viewportRect, const QPointF &fromScenePoint, const QPointF &toScenePoint)
@@ -118,4 +113,40 @@ void MainWindow::on_listWidget_clicked(const QModelIndex &index) // list widget 
     scene->setSceneRect(image.rect()); // create a rectangle on graphics view for the image
 
     ui->graphicsView->setScene(scene); // fill graphics view with the image
+
+    QGraphicsScene scene;
+    scene.addRect(QRectF(-10, -10, 20, 20));
+
+    QGraphicsView view(&scene);
+    view.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    view.show();
 }
+
+void MainWindow::on_pushButton_11_clicked()  // rectangle shape creator
+{
+
+}
+
+void MainWindow::on_pushButton_clicked() // Save COCO button
+{
+
+}
+
+void MainWindow::on_listView_clicked(const QModelIndex &index)
+{
+
+}
+
+MyGraphicsScene::MyGraphicsScene(QObject* parent)
+    : QGraphicsScene(parent)
+{
+    cursor = new QGraphicsTextItem("0, 0", 0, this); //Fixed at 0, 0
+}
+
+void MyGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+{
+    QString string = QString("%1, %2")
+                        .arg(event->scenePos().x())
+                        .arg(event->scenePos().y()); //Update the cursor potion text
+
+    cursor->setPlainText(string);

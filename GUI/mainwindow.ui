@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1480</width>
-    <height>836</height>
+    <width>1539</width>
+    <height>891</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>700</y>
+      <y>710</y>
       <width>111</width>
       <height>31</height>
      </rect>
@@ -31,7 +31,7 @@
     <property name="geometry">
      <rect>
       <x>450</x>
-      <y>700</y>
+      <y>710</y>
       <width>111</width>
       <height>31</height>
      </rect>
@@ -56,10 +56,10 @@
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>1350</x>
-      <y>10</y>
+      <x>1100</x>
+      <y>740</y>
       <width>111</width>
-      <height>61</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -145,17 +145,20 @@
     <property name="geometry">
      <rect>
       <x>570</x>
-      <y>80</y>
-      <width>901</width>
+      <y>40</y>
+      <width>951</width>
       <height>691</height>
      </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>60</y>
+      <y>20</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -194,9 +197,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>90</y>
+      <y>110</y>
       <width>551</width>
-      <height>251</height>
+      <height>231</height>
      </rect>
     </property>
    </widget>
@@ -204,7 +207,7 @@
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>740</y>
+      <y>750</y>
       <width>111</width>
       <height>31</height>
      </rect>
@@ -217,7 +220,7 @@
     <property name="geometry">
      <rect>
       <x>450</x>
-      <y>740</y>
+      <y>750</y>
       <width>111</width>
       <height>31</height>
      </rect>
@@ -232,11 +235,50 @@
       <x>10</x>
       <y>400</y>
       <width>551</width>
-      <height>291</height>
+      <height>301</height>
      </rect>
     </property>
     <property name="alternatingRowColors">
      <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_10">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>740</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add Triangle</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_11">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>740</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add Rectangle</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_12">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>740</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add Pentagon</string>
     </property>
    </widget>
   </widget>
@@ -245,7 +287,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1480</width>
+     <width>1539</width>
      <height>21</height>
     </rect>
    </property>

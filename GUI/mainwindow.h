@@ -11,6 +11,10 @@
 #include <QGraphicsScene>
 #include <QFileInfo>
 
+class QPushButton;
+class QGraphicsView;
+class QGraphicsScene;
+class QGraphicsItem;
 
 namespace Ui {
 class MainWindow;
@@ -25,15 +29,9 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_treeView_activated(const QModelIndex &index);
-
-    void on_listView_activated(const QModelIndex &index);
-
     void on_pushButton_5_clicked();
 
     void on_pushButton_7_clicked();
-
-    void on_listView_2_activated(const QModelIndex &index);
 
     void on_graphicsView_rubberBandChanged(const QRect &viewportRect, const QPointF &fromScenePoint, const QPointF &toScenePoint);
 
@@ -41,11 +39,11 @@ private slots:
 
     void on_pushButton_8_clicked();
 
-    void on_listView_2_doubleClicked(const QModelIndex &index);
-
-    void on_listView_2_clicked(const QModelIndex &index);
-
     void on_listWidget_clicked(const QModelIndex &index);
+
+    void on_pushButton_11_clicked();
+
+    void on_listView_clicked(const QModelIndex &index);
 
 private:
     Ui::MainWindow *ui;
