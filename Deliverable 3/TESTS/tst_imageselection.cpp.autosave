@@ -1,0 +1,80 @@
+#include <QtTest>
+#include <QCoreApplication>
+
+#include "ui_mainwindow.h"
+
+
+// add necessary includes here
+
+// Keyboard and Mouse simulation
+
+// Sends Qt events (no x11 events)
+
+// Supports clicking, double-clicking, pressing and releasing of keys and mouse movement
+
+class ImageSelection : public QObject
+{
+    Q_OBJECT
+
+public:
+    ImageSelection();
+    ~ImageSelection();
+
+private slots:
+  void test_case1();
+    
+private:
+    Ui::MainWindow *ui;
+    QFileSystemModel *filemodel;
+    QPixmap image;
+    QImage  *imageObject;
+    QObject sender;
+    QStringList *model;
+    
+
+};
+
+
+// I WANT TO TEST IT LIKE THAT VIDEO!!!
+// THREE IMAGES
+
+ImageSelection::ImageSelection()
+{
+
+}
+
+ImageSelection::~ImageSelection()
+{
+
+}
+
+
+// TESTING IF IMAGES CAN BE SELECTED
+   
+
+void ImageSelection::test_case1()
+{
+    // SELECT THEM THREE
+    
+    QList<QString> list = {"C:/Users/Alceu Caterca/Pictures/Kante","C:/Users/Alceu Caterca/Pictures/Palanca Negra","C:/Users/Alceu Caterca/Pictures/De sousa"};
+
+   
+    model->setStringList(list); // fill the model with file paths that user has selected
+        
+    ui->ListWidget->addItems(list); // display users selection
+            
+            
+     
+
+   
+    EXPECT_Q(list, ListWidget);
+    
+     // THEN COMPARE WIDGET TO IT
+
+
+
+}
+
+QTEST_MAIN(ImageSelection)
+
+#include "tst_imageselection.moc"
