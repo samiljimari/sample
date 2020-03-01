@@ -136,17 +136,3 @@ void MainWindow::on_listView_clicked(const QModelIndex &index)
 {
 
 }
-
-MyGraphicsScene::MyGraphicsScene(QObject* parent)
-    : QGraphicsScene(parent)
-{
-    cursor = new QGraphicsTextItem("0, 0", 0, this); //Fixed at 0, 0
-}
-
-void MyGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
-{
-    QString string = QString("%1, %2")
-                        .arg(event->scenePos().x())
-                        .arg(event->scenePos().y()); //Update the cursor potion text
-
-    cursor->setPlainText(string);
