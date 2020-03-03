@@ -114,12 +114,12 @@ void MainWindow::on_listWidget_clicked(const QModelIndex &index) // list widget 
 
     ui->graphicsView->setScene(scene); // fill graphics view with the image
 
-    QGraphicsScene scene;
-    scene.addRect(QRectF(-10, -10, 20, 20));
+    //QGraphicsScene scene;
+    //scene.addRect(QRectF(-10, -10, 20, 20));
 
-    QGraphicsView view(&scene);
-    view.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-    view.show();
+    //QGraphicsView view(&scene);
+    //view.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform); // adds a popup on image clicked from listWidget
+    //view.show();
 }
 
 void MainWindow::on_pushButton_11_clicked()  // rectangle shape creator
