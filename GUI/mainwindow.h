@@ -45,6 +45,10 @@ private slots:
 
     void on_listView_clicked(const QModelIndex &index);
 
+    void populateScene();
+
+    void paintEvent(QPaintEvent *event);
+
 private:
     Ui::MainWindow *ui;
     QFileSystemModel *dirmodel;

@@ -18,6 +18,8 @@
 #include <QMessageBox>
 #include <QStringListModel>
 #include <QErrorMessage>
+#include <QDebug>
+#include <QPainter>
 
 //^ libraries,classes,and header files
 
@@ -91,12 +93,19 @@ void MainWindow::on_pushButton_7_clicked() // image browse / select button
                                 "/home",     // default directory
                                 "Images (*.jpg *.jpeg);;PNG (*.png)"); //filetypes elligible to be selected by user
 
+
     filemodel = new QFileSystemModel(this); //create a new filemodel
+
     filemodel->setReadOnly(true); //Filter to disable editing
+
     filemodel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs); //remove unwanted directory paths
+
     ui->listWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); //To disable editing of file names
+
     QStringListModel *model = new QStringListModel(); // create a string list model which will store selected image file paths
+
     model->setStringList(images); // fill the model with file paths that user has selected
+
     ui->listWidget->addItems(images); // display users selection
 }
 
@@ -134,6 +143,12 @@ void MainWindow::on_listWidget_clicked(const QModelIndex &index) // list widget 
     //view.show();
 }
 
+void MainWindow::populateScene() // adding rectangle to the image
+{
+    scene = new QGraphicsScene;
+
+}
+
 void MainWindow::on_pushButton_11_clicked()  // rectangle shape creator
 {
 
@@ -147,4 +162,20 @@ void MainWindow::on_pushButton_clicked() // Save COCO button
 void MainWindow::on_listView_clicked(const QModelIndex &index)
 {
 
+}
+
+void MainWindow::paintEvent(QPaintEvent *event)
+{
+    // unuse
+    Q_UNUSED(event);
+
+    // pass "this" pointer to painter
+    QPainter painter(this);
+
+    // setPen
+    // QPen can take "Qt::black" directly as first arg (without QBrush() constructor)
+    painter.setPen(Qt::black);
+
+    // draw line
+    painter.drawLine(0, 0, 42, 42);
 }
