@@ -15,7 +15,7 @@ QString listTraversal(QList <QListWidgetItem*> items, QString list)
     return list;
 }
 
-void errorMessage(QFile textFile) // function to check for contents of a txt file, if empty, error message is displayed
+void errorMessage(QFile textFile) // displays error if class file selection is aborted
 {
     if(!textFile.open(QIODevice::ReadOnly))
     {
@@ -35,6 +35,15 @@ QStringList populateList(QStringList stringList, QTextStream textStream) // func
     }
     return stringList;
 }
+
+void classFileError(QStringList stringList)
+{
+    if (stringList.size() == 0) // error message to prompt user if a empty class file is selcted
+    {
+        QMessageBox::warning(0,("class file explorer"),("This file is empty, select a different one"));
+    }
+}
+
 
 #endif // FUNCTIONS_H
 

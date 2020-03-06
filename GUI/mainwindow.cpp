@@ -17,6 +17,7 @@
 #include <iostream>
 #include <QMessageBox>
 #include <QStringListModel>
+#include <QErrorMessage>
 
 //^ libraries,classes,and header files
 
@@ -50,12 +51,15 @@ void MainWindow::on_pushButton_5_clicked() // class select / browse button
 
     // open the file
     QFile textFile(class_);
+
     if(!textFile.open(QIODevice::ReadOnly))
     {
-        QMessageBox::information(0,"Error",textFile.errorString()); // if file is empty prompt the user with error
+        QMessageBox::information(0,"Error",textFile.errorString()); // if selecting file is interrupted or read-onl throw errory
     }
 
+
     QTextStream textStream(&textFile);
+
     while (true)  // teststream to read from file
     {
         QString line = textStream.readLine();
@@ -64,6 +68,14 @@ void MainWindow::on_pushButton_5_clicked() // class select / browse button
         else
             stringList.append(line); // populate the stringlist
     }
+
+
+    //if (stringList.size() == 0) // error message to prompt user if a empty class file is selcted
+    //{
+        //QMessageBox::warning(this,tr("class file explorer"),tr("This file is empty, select a different one"));
+    //}
+
+    classFileError(stringList);
 
     model->setStringList(stringList);  // Populate the model
 
