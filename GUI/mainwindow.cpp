@@ -30,6 +30,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
     ui->setupUi(this);
+    scene = new QGraphicsScene(this);
+    ui ->graphicsView->setScene(scene);
 }
 
 MainWindow::~MainWindow() //ui termiantion
@@ -145,13 +147,18 @@ void MainWindow::on_listWidget_clicked(const QModelIndex &index) // list widget 
 
 void MainWindow::populateScene() // adding rectangle to the image
 {
-    scene = new QGraphicsScene;
 
 }
 
 void MainWindow::on_pushButton_11_clicked()  // rectangle shape creator
 {
-
+    QBrush redBrush(Qt::red);
+    QBrush blueBrush(Qt::blue);
+    QPen blackpen(Qt::black);
+    blackpen.setWidth(3);
+    rectangle = scene->addRect(-100,-100,50,50,blackpen,blueBrush);
+    rectangle->setOpacity(.2);
+    rectangle->setFlag(QGraphicsItem::ItemIsMovable);
 }
 
 void MainWindow::on_pushButton_clicked() // Save COCO button
@@ -164,18 +171,12 @@ void MainWindow::on_listView_clicked(const QModelIndex &index)
 
 }
 
-void MainWindow::paintEvent(QPaintEvent *event)
+void MainWindow::on_pushButton_10_clicked() //adding ellipse
 {
-    // unuse
-    Q_UNUSED(event);
-
-    // pass "this" pointer to painter
-    QPainter painter(this);
-
-    // setPen
-    // QPen can take "Qt::black" directly as first arg (without QBrush() constructor)
-    painter.setPen(Qt::black);
-
-    // draw line
-    painter.drawLine(570, 400, 951, 891);
+    QBrush redBrush(Qt::red);
+    QBrush blueBrush(Qt::blue);
+    QPen blackpen(Qt::black);
+    blackpen.setWidth(3);
+    ellipse = scene->addEllipse(10,10,100,100,blackpen,redBrush);
+    ellipse->setFlag(QGraphicsItem::ItemIsMovable);
 }

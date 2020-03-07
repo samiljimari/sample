@@ -47,7 +47,7 @@ private slots:
 
     void populateScene();
 
-    void paintEvent(QPaintEvent *event);
+    void on_pushButton_10_clicked();
 
 private:
     Ui::MainWindow *ui;
