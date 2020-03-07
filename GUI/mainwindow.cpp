@@ -177,5 +177,5 @@ void MainWindow::paintEvent(QPaintEvent *event)
     painter.setPen(Qt::black);
 
     // draw line
-    painter.drawLine(0, 0, 42, 42);
+    painter.drawLine(570, 400, 951, 891);
 }
