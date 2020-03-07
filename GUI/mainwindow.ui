@@ -239,7 +239,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Add Triangle</string>
+     <string>Add Ellipse</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_11">

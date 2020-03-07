@@ -136,13 +136,6 @@ void MainWindow::on_listWidget_clicked(const QModelIndex &index) // list widget 
     scene->setSceneRect(image.rect()); // create a rectangle on graphics view for the image
 
     ui->graphicsView->setScene(scene); // fill graphics view with the image
-
-    //QGraphicsScene scene;
-    //scene.addRect(QRectF(-10, -10, 20, 20));
-
-    //QGraphicsView view(&scene);
-    //view.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform); // adds a popup on image clicked from listWidget
-    //view.show();
 }
 
 void MainWindow::populateScene() // adding rectangle to the image
@@ -152,13 +145,13 @@ void MainWindow::populateScene() // adding rectangle to the image
 
 void MainWindow::on_pushButton_11_clicked()  // rectangle shape creator
 {
-    QBrush redBrush(Qt::red);
-    QBrush blueBrush(Qt::blue);
-    QPen blackpen(Qt::black);
-    blackpen.setWidth(3);
-    rectangle = scene->addRect(-100,-100,50,50,blackpen,blueBrush);
-    rectangle->setOpacity(.2);
-    rectangle->setFlag(QGraphicsItem::ItemIsMovable);
+    QColor brush_color(Qt::blue); //fill color
+    brush_color.setAlpha(50); // alpha index makes brush color more opaque
+    QPen blackpen(Qt::black); //border color
+    blackpen.setWidth(2); // border width
+    rectangle = scene->addRect(-100,-100,50,50,blackpen,brush_color); // sketching the rectangle
+    //rectangle->setOpacity(.2); // makes the item translucent including borders
+    rectangle->setFlag(QGraphicsItem::ItemIsMovable); // making it a moveable object
 }
 
 void MainWindow::on_pushButton_clicked() // Save COCO button
@@ -171,12 +164,12 @@ void MainWindow::on_listView_clicked(const QModelIndex &index)
 
 }
 
-void MainWindow::on_pushButton_10_clicked() //adding ellipse
+void MainWindow::on_pushButton_10_clicked() //ellipse shape creator
 {
-    QBrush redBrush(Qt::red);
-    QBrush blueBrush(Qt::blue);
+    QColor brush_color(Qt::red);
+    brush_color.setAlpha(50);
     QPen blackpen(Qt::black);
-    blackpen.setWidth(3);
-    ellipse = scene->addEllipse(10,10,100,100,blackpen,redBrush);
+    blackpen.setWidth(2);
+    ellipse = scene->addEllipse(10,10,100,100,blackpen,brush_color);
     ellipse->setFlag(QGraphicsItem::ItemIsMovable);
 }
