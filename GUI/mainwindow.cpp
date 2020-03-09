@@ -25,7 +25,7 @@
 
 //^ libraries,classes,and header files
 
-class RectResizer : public SizeGripItem::Resizer
+class RectResizer : public SizeGripItem::Resizer // resize class for rectagle
     {
         public:
             virtual void operator()(QGraphicsItem* item, const QRectF& rect)
@@ -40,7 +40,7 @@ class RectResizer : public SizeGripItem::Resizer
             }
     };
 
-    class EllipseResizer : public SizeGripItem::Resizer
+    class EllipseResizer : public SizeGripItem::Resizer //resize class for ellipse
     {
         public:
             virtual void operator()(QGraphicsItem* item, const QRectF& rect)
@@ -183,13 +183,13 @@ void MainWindow::on_pushButton_11_clicked()  // rectangle shape creator
     brush_color.setAlpha(50); // alpha index makes brush color more opaque
     QPen blackpen(Qt::black); //border color
     blackpen.setWidth(2); // border width
-    rectItem->setBrush(brush_color);
+    rectItem->setBrush(brush_color); // using brush color
     rectItem->setPen(blackpen);
-    rectItem->setFlag(QGraphicsItem::ItemIsMovable);
+    rectItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
     scene->addItem(rectItem);
 
     SizeGripItem* rectSizeGripItem =
-            new SizeGripItem(new RectResizer, rectItem);
+            new SizeGripItem(new RectResizer, rectItem); //assigning the new coordinate values to the object
 
 }
 
@@ -212,9 +212,9 @@ void MainWindow::on_pushButton_10_clicked() //ellipse shape creator
     blackpen.setWidth(2); // border width
     ellipseItem->setBrush(brush_color);
     ellipseItem->setPen(blackpen);
-    ellipseItem->setFlag(QGraphicsItem::ItemIsMovable);
+    ellipseItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
     scene->addItem(ellipseItem);
 
     SizeGripItem* ellipseSizeGripItem =
-        new SizeGripItem(new EllipseResizer, ellipseItem);
+        new SizeGripItem(new EllipseResizer, ellipseItem); //assigning the new coordinate values to the object
 }
