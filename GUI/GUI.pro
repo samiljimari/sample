@@ -26,11 +26,13 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    sizegripitem.cpp
 
 HEADERS += \
         mainwindow.h \
-    functions.h
+    functions.h \
+    sizegripitem.h
 
 FORMS += \
         mainwindow.ui

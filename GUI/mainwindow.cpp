@@ -20,8 +20,41 @@
 #include <QErrorMessage>
 #include <QDebug>
 #include <QPainter>
+#include <QGraphicsItem>
+#include <QBrush>
 
 //^ libraries,classes,and header files
+
+class RectResizer : public SizeGripItem::Resizer
+    {
+        public:
+            virtual void operator()(QGraphicsItem* item, const QRectF& rect)
+            {
+                QGraphicsRectItem* rectItem =
+                    dynamic_cast<QGraphicsRectItem*>(item);
+
+                if (rectItem)
+                {
+                    rectItem->setRect(rect);
+                }
+            }
+    };
+
+    class EllipseResizer : public SizeGripItem::Resizer
+    {
+        public:
+            virtual void operator()(QGraphicsItem* item, const QRectF& rect)
+            {
+                QGraphicsEllipseItem* ellipseItem =
+                    dynamic_cast<QGraphicsEllipseItem*>(item);
+
+                if (ellipseItem)
+                {
+                    ellipseItem->setRect(rect);
+                }
+            }
+    };
+
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -145,13 +178,19 @@ void MainWindow::populateScene() // adding rectangle to the image
 
 void MainWindow::on_pushButton_11_clicked()  // rectangle shape creator
 {
+    QGraphicsRectItem* rectItem = new QGraphicsRectItem(QRectF(0, 0, 320, 240));
     QColor brush_color(Qt::blue); //fill color
     brush_color.setAlpha(50); // alpha index makes brush color more opaque
     QPen blackpen(Qt::black); //border color
     blackpen.setWidth(2); // border width
-    rectangle = scene->addRect(-100,-100,50,50,blackpen,brush_color); // sketching the rectangle
-    //rectangle->setOpacity(.2); // makes the item translucent including borders
-    rectangle->setFlag(QGraphicsItem::ItemIsMovable); // making it a moveable object
+    rectItem->setBrush(brush_color);
+    rectItem->setPen(blackpen);
+    rectItem->setFlag(QGraphicsItem::ItemIsMovable);
+    scene->addItem(rectItem);
+
+    SizeGripItem* rectSizeGripItem =
+            new SizeGripItem(new RectResizer, rectItem);
+
 }
 
 void MainWindow::on_pushButton_clicked() // Save COCO button
@@ -166,10 +205,16 @@ void MainWindow::on_listView_clicked(const QModelIndex &index)
 
 void MainWindow::on_pushButton_10_clicked() //ellipse shape creator
 {
-    QColor brush_color(Qt::red);
-    brush_color.setAlpha(50);
-    QPen blackpen(Qt::black);
-    blackpen.setWidth(2);
-    ellipse = scene->addEllipse(10,10,100,100,blackpen,brush_color);
-    ellipse->setFlag(QGraphicsItem::ItemIsMovable);
+    QGraphicsEllipseItem* ellipseItem = new QGraphicsEllipseItem(QRectF(0, 0, 200, 200));
+    QColor brush_color(Qt::red); //fill color
+    brush_color.setAlpha(50); // alpha index makes brush color more opaque
+    QPen blackpen(Qt::black); //border color
+    blackpen.setWidth(2); // border width
+    ellipseItem->setBrush(brush_color);
+    ellipseItem->setPen(blackpen);
+    ellipseItem->setFlag(QGraphicsItem::ItemIsMovable);
+    scene->addItem(ellipseItem);
+
+    SizeGripItem* ellipseSizeGripItem =
+        new SizeGripItem(new EllipseResizer, ellipseItem);
 }

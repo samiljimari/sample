@@ -6,6 +6,7 @@
 #include <QTextStream>
 #include <QMessageBox>
 
+
 QString listTraversal(QList <QListWidgetItem*> items, QString list)
 {
     for(int j=0;j<items.count();j++)
@@ -43,7 +44,6 @@ void classFileError(QStringList stringList)
         QMessageBox::warning(0,("class file explorer"),("This file is empty, select a different one"));
     }
 }
-
 
 #endif // FUNCTIONS_H
 
