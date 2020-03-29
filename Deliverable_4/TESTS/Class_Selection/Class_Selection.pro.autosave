@@ -1,0 +1,61 @@
+QT += testlib
+QT += gui
+CONFIG += qt warn_on depend_includepath testcase
+
+TEMPLATE = app
+
+SOURCES +=  tst_class_selection.cpp\
+    ../main.cpp \
+        ../main.cpp \
+    ../mainwindow.cpp \
+        ../mainwindow.cpp \
+    ../sizegripitem.cpp \
+    sizegripitem.cpp\
+../mainwindow.ui\
+
+
+CONFIG += c++11
+
+HEADERS +=\
+        ../mainwindow.h \
+    ../functions.h \
+    sizegripitem.h \
+     C:/Users/Alceu Caterca/Documents/WORK!!!/Software Design and Implemenation/SDI-masterLatest/SDI-master/GUI/functions.h \
+../mainwindow.ui\
+
+        ../mainwindow.h \
+functions.h \
+mainwindow.h\
+    ../functions.h \
+    sizegripitem.h
+
+FORMS += \
+        ../mainwindow.ui \
+        mainwindow.ui
+
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    ../resources.qrc \
+    resources.qrc
+
+QT       += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+TARGET = GUI
+TEMPLATE = app
+
+SUBDIRS += \
+    ../GUI.pro
+
+DISTFILES += \
+    ../.gitignore \
+    ../GUI.pro.user \
+    ../GUI.pro.user.12 \
+    ../GUI.pro.user.981af04.4.9-pre1 \
+    ../README.md \
+    ../honklhonk.jpg
