@@ -1,6 +1,7 @@
 #include "functions.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <Qt>
 #include <QFileDialog>
 #include <QStandardItem>
 #include <QFileSystemModel>
@@ -106,11 +107,6 @@ void MainWindow::on_pushButton_5_clicked() // class select / browse button
             stringList.append(line); // populate the stringlist
     }
 
-
-    //if (stringList.size() == 0) // error message to prompt user if a empty class file is selcted
-    //{
-        //QMessageBox::warning(this,tr("class file explorer"),tr("This file is empty, select a different one"));
-    //}
 
     classFileError(stringList);
 
@@ -266,4 +262,40 @@ void MainWindow::on_pushButton_15_clicked()
 {
     //clear button for image listwidget
     ui->listWidget->clear();
+}
+
+void MainWindow::on_pushButton_16_clicked()
+{
+    //Sort ascending by file creation date
+    QStringList itemsMedium; //string list to hold all items from listwidget in plain text
+
+    for(int i = 0; i < ui->listWidget->count(); i++) // for loop to iterate through all listwidget items
+    {
+        QListWidgetItem* item = ui->listWidget->item(i); //getting each item one by one from list widget
+        itemsMedium << item->text(); // transforming the item into plain text and addin it to our string list
+    }
+    QStringList itemsLastModifiedMedium;
+    for(int i = 0; i < itemsMedium.count();i++)
+    {
+        const QFileInfo info(itemsMedium[i]);
+        const QDateTime lastModified = info.lastModified();
+        QString as = lastModified.toString("yyyy-MM-dd HH:mm:ss");
+        itemsLastModifiedMedium << as;
+    }
+
+    std::sort(itemsLastModifiedMedium.begin(), itemsLastModifiedMedium.end(),compareNamesAscending); //sorting the string list from beggining to the end in ascending order
+
+    ui->listWidget->clear(); // clearing the old order of items in list widget
+
+    QStringListModel *model = new QStringListModel(); // create a string list model which will store selected image file paths
+
+    model->setStringList(itemsLastModifiedMedium); // fill the model with file paths
+    ui->listWidget->addItems(itemsLastModifiedMedium); // display updated order selection
+    // need to add a way to link file and its date together to compare
+}
+
+void MainWindow::on_pushButton_17_clicked()
+{
+    //Sort descending by file creation date
+
 }
