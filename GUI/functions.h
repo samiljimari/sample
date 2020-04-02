@@ -46,7 +46,7 @@ void classFileError(QStringList stringList)
     }
 }
 
-bool compareNames(const QString& s1,const QString& s2)
+bool compareNamesAscending(const QString& s1,const QString& s2)
 {
     // ignore common prefix..
     int i = 0;

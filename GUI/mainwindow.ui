@@ -93,7 +93,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>360</y>
+      <y>400</y>
       <width>47</width>
       <height>13</height>
      </rect>
@@ -106,7 +106,7 @@
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>350</y>
+      <y>390</y>
       <width>81</width>
       <height>31</height>
      </rect>
@@ -184,9 +184,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>140</y>
+      <y>190</y>
       <width>551</width>
-      <height>201</height>
+      <height>191</height>
      </rect>
     </property>
    </widget>
@@ -220,9 +220,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>400</y>
+      <y>430</y>
       <width>551</width>
-      <height>301</height>
+      <height>271</height>
      </rect>
     </property>
     <property name="alternatingRowColors">
@@ -283,25 +283,64 @@
      <rect>
       <x>10</x>
       <y>90</y>
-      <width>101</width>
+      <width>161</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>Sort Ascending</string>
+     <string>Sort Ascending by name</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_14">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>90</y>
-      <width>101</width>
+      <x>10</x>
+      <y>140</y>
+      <width>161</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>Sort Descending</string>
+     <string>Sort Descending by name</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_15">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>150</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear list</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_16">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>90</y>
+      <width>141</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sort Ascending by date</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_17">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>140</y>
+      <width>141</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sort Descending by date</string>
     </property>
    </widget>
   </widget>
