@@ -97,7 +97,7 @@ void MainWindow::on_pushButton_5_clicked() // class select / browse button
 
     QTextStream textStream(&textFile);
 
-    while (true)  // teststream to read from file
+    while (true)  // textstream to read from file
     {
         QString line = textStream.readLine();
         if (line.isNull())
@@ -120,13 +120,13 @@ void MainWindow::on_pushButton_5_clicked() // class select / browse button
 
 }
 
-void MainWindow::on_pushButton_7_clicked() // image browse / select button
+void MainWindow::on_pushButton_7_clicked() // image browse button
 {
     QStringList images = QFileDialog::getOpenFileNames(   //open up file browser with QFileDialog
                                 this,                     //and assign selected file paths to a QStringList of images variable
                                 "Select one or more files to open",
                                 "/home",     // default directory
-                                "Images (*.jpg *.jpeg);;PNG (*.png)"); //filetypes elligible to be selected by user
+                                "JPG (*.jpg *.jpeg);;PNG (*.png);;ALL (*.jpg *.jpeg *.png)"); //filetypes elligible to be selected by user
 
 
     filemodel = new QFileSystemModel(this); //create a new filemodel
@@ -217,4 +217,30 @@ void MainWindow::on_pushButton_10_clicked() //ellipse shape creator
 
     SizeGripItem* ellipseSizeGripItem =
         new SizeGripItem(new EllipseResizer, ellipseItem); //assigning the new coordinate values to the object
+}
+
+void MainWindow::on_pushButton_13_clicked()   //sort ascending button
+{
+    QStringList itemsMedium; //string list to hold all items from listwidget in plain text
+
+    for(int i = 0; i < ui->listWidget->count(); ++i) // for loop to iterate through all listwidget items
+    {
+        QListWidgetItem* item = ui->listWidget->item(i); //getting each item one by one from list widget
+        itemsMedium << item->text(); // transforming the item into plain text and addin it to our string list
+    }
+
+    std::sort(itemsMedium.begin(), itemsMedium.end(),compareNames); // sorting the string list from beggining to the end in ascending order
+
+    ui->listWidget->clear(); // clearing the old order of items in list widget
+
+    QStringListModel *model = new QStringListModel(); // create a string list model which will store selected image file paths
+
+    model->setStringList(itemsMedium); // fill the model with file paths
+    ui->listWidget->addItems(itemsMedium); // display updated order selection
+
+}
+
+void MainWindow::on_pushButton_14_clicked()
+{
+    //sort descending button
 }
