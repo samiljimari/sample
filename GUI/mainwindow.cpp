@@ -222,7 +222,7 @@ void MainWindow::on_pushButton_13_clicked()   //sort ascending button
     for(int i = 0; i < ui->listWidget->count(); ++i) // for loop to iterate through all listwidget items
     {
         QListWidgetItem* item = ui->listWidget->item(i); //getting each item one by one from list widget
-        itemsMedium << item->text(); // transforming the item into plain text and addin it to our string list
+        itemsMedium << item->text(); // transforming the item into plain text and adding it to our string list
     }
 
     std::sort(itemsMedium.begin(), itemsMedium.end(),compareNamesAscending); //sorting the string list from beggining to the end in ascending order
@@ -277,25 +277,115 @@ void MainWindow::on_pushButton_16_clicked()
     QStringList itemsLastModifiedMedium;
     for(int i = 0; i < itemsMedium.count();i++)
     {
-        const QFileInfo info(itemsMedium[i]);
-        const QDateTime lastModified = info.lastModified();
-        QString as = lastModified.toString("yyyy-MM-dd HH:mm:ss");
-        itemsLastModifiedMedium << as;
+        const QFileInfo info(itemsMedium[i]); //select the file we want info about
+        const QDateTime lastModified = info.lastModified(); // get the last modified date and time of the selected file
+        QString as = lastModified.toString("yyyy-MM-dd HH:mm:ss"); // convert data from QFileInfo and QDateTime to string with above format
+        itemsLastModifiedMedium << as; // add our converted data to a list where are file data will be stored
     }
 
-    std::sort(itemsLastModifiedMedium.begin(), itemsLastModifiedMedium.end(),compareNamesAscending); //sorting the string list from beggining to the end in ascending order
+    QList<QStringList> combinedList; // will hold values of both lists in a combined list made up of filepaths and file dates
+
+    for(int i = 0; i < itemsMedium.count(); i++) //loop to separate values into couples and add them to combined list
+    {
+        QStringList adder; //list used to store values between iterations
+        QString x = itemsLastModifiedMedium[i]; //find date value at point i
+        QString y = itemsMedium[i]; //find the file of which the date is
+        adder << x; //add value to list
+        adder << y; //add value to list
+        combinedList << adder; // add the loop list into our combined list
+        adder.clear(); // clear the list so that its clear for the next iteration
+    }
+
+    std::sort(combinedList.begin(), combinedList.end(),[](const QList<QString>& left,const QList<QString>& right)->bool{
+        if(left.empty() && right.empty())
+            return false;
+        if(left.empty())
+            return true;
+        if(right.empty())
+            return false;
+        return left.first()<right.first();
+    });
+    //qDebug() << combinedList;
+
+    QStringList orderedOutput;
+
+    for(int i = 0; i < itemsMedium.count(); i++) // fill in orderedOutput list with just filepaths or the 2nd value of each list
+    {
+        QStringList adder; //QStringList to hold loop values
+        adder << combinedList[i]; //assigning a sorted pair
+        orderedOutput << adder[1];
+        adder.clear();
+    }
 
     ui->listWidget->clear(); // clearing the old order of items in list widget
 
     QStringListModel *model = new QStringListModel(); // create a string list model which will store selected image file paths
 
-    model->setStringList(itemsLastModifiedMedium); // fill the model with file paths
-    ui->listWidget->addItems(itemsLastModifiedMedium); // display updated order selection
-    // need to add a way to link file and its date together to compare
+    model->setStringList(orderedOutput); // fill the model with file paths
+    ui->listWidget->addItems(orderedOutput); // display updated order selection
 }
 
 void MainWindow::on_pushButton_17_clicked()
 {
     //Sort descending by file creation date
+    QStringList itemsMedium; //string list to hold all items from listwidget in plain text
+
+    for(int i = 0; i < ui->listWidget->count(); i++) // for loop to iterate through all listwidget items
+    {
+        QListWidgetItem* item = ui->listWidget->item(i); //getting each item one by one from list widget
+        itemsMedium << item->text(); // transforming the item into plain text and addin it to our string list
+    }
+    QStringList itemsLastModifiedMedium;
+    for(int i = 0; i < itemsMedium.count();i++)
+    {
+        const QFileInfo info(itemsMedium[i]); //select the file we want info about
+        const QDateTime lastModified = info.lastModified(); // get the last modified date and time of the selected file
+        QString as = lastModified.toString("yyyy-MM-dd HH:mm:ss"); // convert data from QFileInfo and QDateTime to string with above format
+        itemsLastModifiedMedium << as; // add our converted data to a list where are file data will be stored
+    }
+
+    QList<QStringList> combinedList; // will hold values of both lists in a combined list made up of filepaths and file dates
+
+    for(int i = 0; i < itemsMedium.count(); i++) //loop to separate values into couples and add them to combined list
+    {
+        QStringList adder; //list used to store values between iterations
+        QString x = itemsLastModifiedMedium[i]; //find date value at point i
+        QString y = itemsMedium[i]; //find the file of which the date is
+        adder << x; //add value to list
+        adder << y; //add value to list
+        combinedList << adder; // add the loop list into our combined list
+        adder.clear(); // clear the list so that its clear for the next iteration
+    }
+
+    std::sort(combinedList.begin(), combinedList.end(),[](const QList<QString>& left,const QList<QString>& right)->bool{
+        if(left.empty() && right.empty())
+            return false;
+        if(left.empty())
+            return true;
+        if(right.empty())
+            return false;
+        return left.first()<right.first();
+    });
+
+
+
+    QStringList orderedOutput;
+
+    for(int i = 0; i < itemsMedium.count(); i++) // fill in orderedOutput list with just filepaths or the 2nd value of each list
+    {
+        QStringList adder; //QStringList to hold loop values
+        adder << combinedList[i]; //assigning a sorted pair
+        orderedOutput << adder[1];
+        adder.clear();
+    }
+
+    std::reverse(orderedOutput.begin(),orderedOutput.end()); //AGAIN only change from ascending is reversing the order in the end
+
+    ui->listWidget->clear(); // clearing the old order of items in list widget
+
+    QStringListModel *model = new QStringListModel(); // create a string list model which will store selected image file paths
+
+    model->setStringList(orderedOutput); // fill the model with file paths
+    ui->listWidget->addItems(orderedOutput); // display updated order selection
 
 }

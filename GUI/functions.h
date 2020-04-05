@@ -46,7 +46,7 @@ void classFileError(QStringList stringList)
     }
 }
 
-bool compareNamesAscending(const QString& s1,const QString& s2)
+bool compareNamesAscending(QString& s1,QString& s2)
 {
     // ignore common prefix..
     int i = 0;
@@ -61,8 +61,6 @@ bool compareNamesAscending(const QString& s1,const QString& s2)
         //If not number return native comparator
         if(!s1.at(k).isNumber() || !s2.at(k).isNumber())
         {
-            //Two next lines
-            //E.g. 1_... < 12_...
             if(s1.at(k).isNumber())
                 return false;
             if(s2.at(k).isNumber())
@@ -95,12 +93,11 @@ bool compareNamesAscending(const QString& s1,const QString& s2)
             ++k;
         }
 
-        // got two numbers to compare?
+        // if comparing numbers
         if (!n1.isEmpty() && !n2.isEmpty())
             return (n+n1).toInt() < (n+n2).toInt();
         else
         {
-            // not a number has to win over a number.. number could have ended earlier... same prefix..
             if (!n1.isEmpty())
                 return false;
             if (!n2.isEmpty())

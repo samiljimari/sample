@@ -322,12 +322,12 @@
      <rect>
       <x>180</x>
       <y>90</y>
-      <width>141</width>
+      <width>181</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>Sort Ascending by date</string>
+     <string>Sort Ascending by date (Newest)</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_17">
@@ -335,12 +335,12 @@
      <rect>
       <x>180</x>
       <y>140</y>
-      <width>141</width>
+      <width>181</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>Sort Descending by date</string>
+     <string>Sort Descending by date (Oldest)</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_18">
