@@ -79,7 +79,7 @@ void MainWindow::on_pushButton_5_clicked() // class select / browse button
                             this,                         //and assign selected file paths to a QStringList of images variable
                             "Select one or more files to open",
                             "/home",                      // default directory
-                            "Classes (*.names);;TXT Files(*.txt)"); //filetypes elligible to be selected by user
+                            "Classes (*.names);;TXT Files(*.txt);;ALL (*.names *.txt *.rtf)"); //filetypes elligible to be selected by user
 
     QStringList stringList; //stringlist for class file data
     QStringListModel *model; // model to store data in
@@ -174,6 +174,9 @@ void MainWindow::populateScene() // adding rectangle to the image
 
 void MainWindow::on_pushButton_11_clicked()  // rectangle shape creator
 {
+    QModelIndex index = ui->listView->currentIndex();
+    QString itemText = index.data(Qt::DisplayRole).toString();
+
     QGraphicsRectItem* rectItem = new QGraphicsRectItem(QRectF(0, 0, 320, 240));
     QColor brush_color(Qt::blue); //fill color
     brush_color.setAlpha(50); // alpha index makes brush color more opaque
@@ -184,8 +187,9 @@ void MainWindow::on_pushButton_11_clicked()  // rectangle shape creator
     rectItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
     scene->addItem(rectItem);
 
-    SizeGripItem* rectSizeGripItem =
-            new SizeGripItem(new RectResizer, rectItem); //assigning the new coordinate values to the object
+    QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, rectItem); //assigning class name to rectangle
+
+    SizeGripItem* rectSizeGripItem = new SizeGripItem(new RectResizer, rectItem); //assigning the new coordinate values to the object
 
 }
 
@@ -201,6 +205,9 @@ void MainWindow::on_listView_clicked(const QModelIndex &index)
 
 void MainWindow::on_pushButton_10_clicked() //ellipse shape creator
 {
+    QModelIndex index = ui->listView->currentIndex();
+    QString itemText = index.data(Qt::DisplayRole).toString();
+
     QGraphicsEllipseItem* ellipseItem = new QGraphicsEllipseItem(QRectF(0, 0, 200, 200));
     QColor brush_color(Qt::red); //fill color
     brush_color.setAlpha(50); // alpha index makes brush color more opaque
@@ -211,8 +218,9 @@ void MainWindow::on_pushButton_10_clicked() //ellipse shape creator
     ellipseItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
     scene->addItem(ellipseItem);
 
-    SizeGripItem* ellipseSizeGripItem =
-        new SizeGripItem(new EllipseResizer, ellipseItem); //assigning the new coordinate values to the object
+    QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, ellipseItem); //assigning class name to rectange
+
+    SizeGripItem* ellipseSizeGripItem = new SizeGripItem(new EllipseResizer, ellipseItem); //assigning the new coordinate values to the object
 }
 
 void MainWindow::on_pushButton_13_clicked()   //sort ascending button
@@ -305,7 +313,7 @@ void MainWindow::on_pushButton_16_clicked()
             return false;
         return left.first()<right.first();
     });
-    //qDebug() << combinedList;
+    qDebug() << combinedList;
 
     QStringList orderedOutput;
 
@@ -388,4 +396,163 @@ void MainWindow::on_pushButton_17_clicked()
     model->setStringList(orderedOutput); // fill the model with file paths
     ui->listWidget->addItems(orderedOutput); // display updated order selection
 
+}
+
+void MainWindow::on_pushButton_18_clicked()
+{
+    //Add Triangle
+
+    QPolygonF Triangle;
+    Triangle.append(QPointF(-200.,0));
+    Triangle.append(QPointF(0.,-200));
+    Triangle.append(QPointF(200.,0));
+
+
+    QModelIndex index = ui->listView->currentIndex();
+    QString itemText = index.data(Qt::DisplayRole).toString();
+
+    QGraphicsPolygonItem* triangleItem = new QGraphicsPolygonItem(Triangle);
+    QColor brush_color(Qt::green); //fill color
+    brush_color.setAlpha(50); // alpha index makes brush color more opaque
+    QPen blackpen(Qt::black); //border color
+    blackpen.setWidth(2); // border width
+    triangleItem->setBrush(brush_color); // using brush color
+    triangleItem->setPen(blackpen);
+    triangleItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
+    scene->addItem(triangleItem);
+
+    QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, triangleItem); //assigning class name to rectange
+
+    SizeGripItem* triangleSizeGripItem = new SizeGripItem(new EllipseResizer, triangleItem); //assigning the new coordinate values to the object
+
+}
+
+void MainWindow::on_pushButton_12_clicked()
+{
+    //Add pentagon
+    QPolygonF Pentagon;
+    Pentagon.append(QPointF(0.,-150));
+    Pentagon.append(QPointF(-143.,-46));
+    Pentagon.append(QPointF(-88.,121));
+    Pentagon.append(QPointF(88.,121));
+    Pentagon.append(QPointF(143.,-46));
+    //start 0,0 radius 150
+
+
+    QModelIndex index = ui->listView->currentIndex();
+    QString itemText = index.data(Qt::DisplayRole).toString();
+
+    QGraphicsPolygonItem* pentagonItem = new QGraphicsPolygonItem(Pentagon);
+    QColor brush_color(Qt::magenta); //fill color
+    brush_color.setAlpha(50); // alpha index makes brush color more opaque
+    QPen blackpen(Qt::black); //border color
+    blackpen.setWidth(2); // border width
+    pentagonItem->setBrush(brush_color); // using brush color
+    pentagonItem->setPen(blackpen);
+    pentagonItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
+    scene->addItem(pentagonItem);
+
+    QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, pentagonItem); //assigning class name to rectange
+
+    SizeGripItem* triangleSizeGripItem = new SizeGripItem(new EllipseResizer, pentagonItem); //assigning the new coordinate values to the object
+
+}
+
+void MainWindow::on_pushButton_19_clicked()
+{
+    //Add Hexagon
+
+    QPolygonF Hexagon;
+    Hexagon.append(QPointF(75.,-130));
+    Hexagon.append(QPointF(-75.,-130));
+    Hexagon.append(QPointF(-150.,0));
+    Hexagon.append(QPointF(-75.,130));
+    Hexagon.append(QPointF(75.,130));
+    Hexagon.append(QPointF(150.,0));
+    //start 0,0 radius 150
+
+
+    QModelIndex index = ui->listView->currentIndex();
+    QString itemText = index.data(Qt::DisplayRole).toString();
+
+    QGraphicsPolygonItem* hexagonItem = new QGraphicsPolygonItem(Hexagon);
+    QColor brush_color(Qt::cyan); //fill color
+    brush_color.setAlpha(50); // alpha index makes brush color more opaque
+    QPen blackpen(Qt::black); //border color
+    blackpen.setWidth(2); // border width
+    hexagonItem->setBrush(brush_color); // using brush color
+    hexagonItem->setPen(blackpen);
+    hexagonItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
+    scene->addItem(hexagonItem);
+
+    QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, hexagonItem); //assigning class name to rectange
+
+    SizeGripItem* triangleSizeGripItem = new SizeGripItem(new EllipseResizer, hexagonItem); //assigning the new coordinate values to the object
+}
+
+void MainWindow::on_pushButton_20_clicked()
+{
+    //Add Heptagon
+
+    QPolygonF Heptagon;
+    Heptagon.append(QPointF(0.,-150));
+    Heptagon.append(QPointF(-117.,-94));
+    Heptagon.append(QPointF(-146.,33));
+    Heptagon.append(QPointF(-65.,135));
+    Heptagon.append(QPointF(65.,135));
+    Heptagon.append(QPointF(146.,33));
+    Heptagon.append(QPointF(117.,-94));
+    //start 0,0 radius 150
+
+
+    QModelIndex index = ui->listView->currentIndex();
+    QString itemText = index.data(Qt::DisplayRole).toString();
+
+    QGraphicsPolygonItem* heptagonItem = new QGraphicsPolygonItem(Heptagon);
+    QColor brush_color(Qt::yellow); //fill color
+    brush_color.setAlpha(50); // alpha index makes brush color more opaque
+    QPen blackpen(Qt::black); //border color
+    blackpen.setWidth(2); // border width
+    heptagonItem->setBrush(brush_color); // using brush color
+    heptagonItem->setPen(blackpen);
+    heptagonItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
+    scene->addItem(heptagonItem);
+
+    QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, heptagonItem); //assigning class name to rectange
+
+    SizeGripItem* triangleSizeGripItem = new SizeGripItem(new EllipseResizer, heptagonItem); //assigning the new coordinate values to the object
+}
+
+void MainWindow::on_pushButton_21_clicked()
+{
+    //Add Octagon
+
+    QPolygonF Octagon;
+    Octagon.append(QPointF(57.,-139));
+    Octagon.append(QPointF(-57.,-139));
+    Octagon.append(QPointF(-139.,-57));
+    Octagon.append(QPointF(-139.,57));
+    Octagon.append(QPointF(-57.,139));
+    Octagon.append(QPointF(57.,139));
+    Octagon.append(QPointF(139.,57));
+    Octagon.append(QPointF(139.,-57));
+    //start 0,0 radius 150
+
+
+    QModelIndex index = ui->listView->currentIndex();
+    QString itemText = index.data(Qt::DisplayRole).toString();
+
+    QGraphicsPolygonItem* octagonItem = new QGraphicsPolygonItem(Octagon);
+    QColor brush_color(Qt::black); //fill color
+    brush_color.setAlpha(50); // alpha index makes brush color more opaque
+    QPen blackpen(Qt::black); //border color
+    blackpen.setWidth(2); // border width
+    octagonItem->setBrush(brush_color); // using brush color
+    octagonItem->setPen(blackpen);
+    octagonItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
+    scene->addItem(octagonItem);
+
+    QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, octagonItem); //assigning class name to rectange
+
+    SizeGripItem* triangleSizeGripItem = new SizeGripItem(new EllipseResizer, octagonItem); //assigning the new coordinate values to the object
 }

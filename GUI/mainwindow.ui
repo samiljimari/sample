@@ -53,19 +53,6 @@
      <string>Images:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
-    <property name="geometry">
-     <rect>
-      <x>1410</x>
-      <y>740</y>
-      <width>111</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Crop &amp; Save</string>
-    </property>
-   </widget>
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
@@ -177,7 +164,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Crop &amp; Save</string>
+     <string>Crop and  Save</string>
     </property>
    </widget>
    <widget class="QListWidget" name="listWidget">
