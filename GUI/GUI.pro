@@ -32,7 +32,8 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     functions.h \
-    sizegripitem.h
+    sizegripitem.h \
+    global.h
 
 FORMS += \
         mainwindow.ui

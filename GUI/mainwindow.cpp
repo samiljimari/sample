@@ -24,6 +24,7 @@
 #include <QGraphicsItem>
 #include <QBrush>
 #include <QtWidgets>
+#include <global.h>
 
 //^ libraries,classes,and header files
 
@@ -82,6 +83,7 @@ class RectResizer : public SizeGripItem::Resizer // resize class for rectagle
                 }
         };
 
+QString txtFileStorage = "";
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -91,6 +93,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
     ui ->graphicsView->setScene(scene);
+    ui->pushButton_4->setEnabled(false);
 }
 
 MainWindow::~MainWindow() //ui termiantion
@@ -112,6 +115,8 @@ void MainWindow::on_pushButton_5_clicked() // class select / browse button
     // Create model
     model = new QStringListModel(this);
 
+    txtFileStorage = class_;
+
     // open the file
     QFile textFile(class_);
 
@@ -126,10 +131,12 @@ void MainWindow::on_pushButton_5_clicked() // class select / browse button
     while (true)  // textstream to read from file
     {
         QString line = textStream.readLine();
+
         if (line.isNull())
             break;
         else
             stringList.append(line); // populate the stringlist
+            ui->pushButton_4->setEnabled(true);
     }
 
 
@@ -138,7 +145,6 @@ void MainWindow::on_pushButton_5_clicked() // class select / browse button
     model->setStringList(stringList);  // Populate the model
 
     ui->listView->setModel(model);  // Glue model and view together
-
 }
 
 void MainWindow::on_pushButton_7_clicked() // image browse button
@@ -585,6 +591,63 @@ void MainWindow::on_pushButton_21_clicked()
 void MainWindow::on_pushButton_4_clicked()
 {
     //Add class to class file
+
+    bool ok;
+       QString text = QInputDialog::getText(this, tr("Add class"),
+                                            tr("Desired class name:"), QLineEdit::Normal,"",&ok);
+       QString value;
+
+       if (ok && !text.isEmpty())
+           value = text;
+
+
+       QFile file(txtFileStorage);
+           if (file.open(QIODevice::Append | QIODevice::Text))
+           {
+                QTextStream in(&file);
+
+                    if (in.atEnd())
+                    {
+                        in << endl << value;
+                    }
+            }
+
+           QStringList stringList; //stringlist for class file data
+           QStringListModel *model; // model to store data in
+
+           // Create model
+           model = new QStringListModel(this);
+
+           QFile textFile(txtFileStorage);
+
+           if(!textFile.open(QIODevice::ReadOnly))
+           {
+               QMessageBox::information(0,"Error",textFile.errorString()); // if selecting file is interrupted or read-onl throw errory
+           }
+
+
+           QTextStream textStream(&textFile);
+
+           while (true)  // textstream to read from file
+           {
+               QString line = textStream.readLine();
+
+               if (line.isNull())
+                   break;
+               else
+                   stringList.append(line); // populate the stringlist
+                   ui->pushButton_4->setEnabled(true);
+           }
+
+
+           classFileError(stringList);
+
+           model->setStringList(stringList);  // Populate the model
+
+           ui->listView->setModel(model);  // Glue model and view together
+
+        qDebug() << stringList;
+
 
 }
 
