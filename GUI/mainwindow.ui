@@ -390,12 +390,12 @@
      <rect>
       <x>250</x>
       <y>360</y>
-      <width>111</width>
+      <width>151</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Sort Ascending</string>
+     <string>Sort Ascending by name</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_24">
@@ -403,12 +403,12 @@
      <rect>
       <x>250</x>
       <y>400</y>
-      <width>111</width>
+      <width>151</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Sort Desceding</string>
+     <string>Sort Desceding by name</string>
     </property>
    </widget>
   </widget>

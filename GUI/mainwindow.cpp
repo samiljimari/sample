@@ -253,7 +253,7 @@ void MainWindow::on_pushButton_10_clicked() //ellipse shape creator
     SizeGripItem* ellipseSizeGripItem = new SizeGripItem(new EllipseResizer, ellipseItem); //assigning the new coordinate values to the object
 }
 
-void MainWindow::on_pushButton_13_clicked()   //sort ascending button
+void MainWindow::on_pushButton_13_clicked()   //sort images ascending button
 {
     QStringList itemsMedium; //string list to hold all items from listwidget in plain text
 
@@ -276,7 +276,7 @@ void MainWindow::on_pushButton_13_clicked()   //sort ascending button
 
 void MainWindow::on_pushButton_14_clicked()
 {
-    //sort descending button
+    //sort images descending button
     QStringList itemsMedium; //string list to hold all items from listwidget in plain text
 
     for(int i = 0; i < ui->listWidget->count(); ++i) // for loop to iterate through all listwidget items
@@ -304,7 +304,7 @@ void MainWindow::on_pushButton_15_clicked()
 
 void MainWindow::on_pushButton_16_clicked()
 {
-    //Sort ascending by file creation date
+    //Sort images ascending by file creation date
     QStringList itemsMedium; //string list to hold all items from listwidget in plain text
 
     for(int i = 0; i < ui->listWidget->count(); i++) // for loop to iterate through all listwidget items
@@ -365,7 +365,7 @@ void MainWindow::on_pushButton_16_clicked()
 
 void MainWindow::on_pushButton_17_clicked()
 {
-    //Sort descending by file creation date
+    //Sort images descending by file creation date
     QStringList itemsMedium; //string list to hold all items from listwidget in plain text
 
     for(int i = 0; i < ui->listWidget->count(); i++) // for loop to iterate through all listwidget items
@@ -484,7 +484,7 @@ void MainWindow::on_pushButton_12_clicked()
 
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, pentagonItem); //assigning class name to rectange
 
-    SizeGripItem* triangleSizeGripItem = new SizeGripItem(new PolygonResizer, pentagonItem); //assigning the new coordinate values to the object
+    SizeGripItem* pentagonSizeGripItem = new SizeGripItem(new PolygonResizer, pentagonItem); //assigning the new coordinate values to the object
 
 }
 
@@ -517,7 +517,7 @@ void MainWindow::on_pushButton_19_clicked()
 
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, hexagonItem); //assigning class name to rectange
 
-    SizeGripItem* triangleSizeGripItem = new SizeGripItem(new EllipseResizer, hexagonItem); //assigning the new coordinate values to the object
+    SizeGripItem* hexagonSizeGripItem = new SizeGripItem(new PolygonResizer, hexagonItem); //assigning the new coordinate values to the object
 }
 
 void MainWindow::on_pushButton_20_clicked()
@@ -550,7 +550,7 @@ void MainWindow::on_pushButton_20_clicked()
 
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, heptagonItem); //assigning class name to rectange
 
-    SizeGripItem* triangleSizeGripItem = new SizeGripItem(new EllipseResizer, heptagonItem); //assigning the new coordinate values to the object
+    SizeGripItem* heptagonSizeGripItem = new SizeGripItem(new PolygonResizer, heptagonItem); //assigning the new coordinate values to the object
 }
 
 void MainWindow::on_pushButton_21_clicked()
@@ -584,7 +584,7 @@ void MainWindow::on_pushButton_21_clicked()
 
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, octagonItem); //assigning class name to rectange
 
-    SizeGripItem* triangleSizeGripItem = new SizeGripItem(new EllipseResizer, octagonItem); //assigning the new coordinate values to the object
+    SizeGripItem* octagonSizeGripItem = new SizeGripItem(new PolygonResizer, octagonItem); //assigning the new coordinate values to the object
 }
 
 void MainWindow::on_pushButton_4_clicked()
@@ -718,10 +718,80 @@ void MainWindow::on_pushButton_23_clicked()
 {
     //Sort classes Ascending
 
+    QStringListModel *model; // model to store data in
+
+    // Create model
+    model = new QStringListModel(this);
+
+    QStringList stringList;
+    QFile textFile(txtFileStorage);
+
+    if(!textFile.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::information(0,"Error",textFile.errorString()); // if selecting file is interrupted or read-onl throw error
+    }
+
+
+    QTextStream textStream(&textFile);
+
+    while (true)  // textstream to read from file
+    {
+        QString line = textStream.readLine();
+
+        if (line.isNull())
+            break;
+        else
+            stringList.append(line); // populate the stringlist
+    }
+
+    std::sort(stringList.begin(), stringList.end(),compareNamesAscending); //sorting the string list from beggining to the end in ascending order
+
+    classFileError(stringList);
+
+    model->setStringList(stringList);  // Populate the model
+
+    ui->listView->setModel(model);  // Glue model and view together
+
+
 }
 
 void MainWindow::on_pushButton_24_clicked()
 {
     //Sort classes Descending
+
+    QStringListModel *model; // model to store data in
+
+    // Create model
+    model = new QStringListModel(this);
+
+    QStringList stringList;
+    QFile textFile(txtFileStorage);
+
+    if(!textFile.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::information(0,"Error",textFile.errorString()); // if selecting file is interrupted or read-onl throw error
+    }
+
+
+    QTextStream textStream(&textFile);
+
+    while (true)  // textstream to read from file
+    {
+        QString line = textStream.readLine();
+
+        if (line.isNull())
+            break;
+        else
+            stringList.append(line); // populate the stringlist
+    }
+
+    std::sort(stringList.begin(), stringList.end(),compareNamesAscending); //sorting the string list from beggining to the end in ascending order
+    std::reverse(stringList.begin(),stringList.end()); // IMPORTANT this reverses strings into descending order, only change from above code
+
+    classFileError(stringList);
+
+    model->setStringList(stringList);  // Populate the model
+
+    ui->listView->setModel(model);  // Glue model and view together
 
 }
