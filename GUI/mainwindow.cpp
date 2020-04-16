@@ -138,8 +138,7 @@ void MainWindow::on_pushButton_5_clicked() // class select / browse button
             stringList.append(line); // populate the stringlist
             ui->pushButton_4->setEnabled(true);
     }
-
-
+    //qDebug() << stringList;
     classFileError(stringList);
 
     model->setStringList(stringList);  // Populate the model
@@ -622,7 +621,7 @@ void MainWindow::on_pushButton_4_clicked()
 
            if(!textFile.open(QIODevice::ReadOnly))
            {
-               QMessageBox::information(0,"Error",textFile.errorString()); // if selecting file is interrupted or read-onl throw errory
+               QMessageBox::information(0,"Error",textFile.errorString()); // if selecting file is interrupted or read-onl throw error
            }
 
 
@@ -646,7 +645,7 @@ void MainWindow::on_pushButton_4_clicked()
 
            ui->listView->setModel(model);  // Glue model and view together
 
-        qDebug() << stringList;
+        //qDebug() << stringList;
 
 
 }
@@ -655,6 +654,64 @@ void MainWindow::on_pushButton_22_clicked()
 {
     //Remove class from class file
 
+
+    QStringList stringList; //stringlist for class file data
+    QStringListModel *model; // model to store data in
+
+    // Create model
+    model = new QStringListModel(this);
+
+    QFile textFile(txtFileStorage);
+
+    if(!textFile.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::information(0,"Error",textFile.errorString()); // if selecting file is interrupted or read-onl throw error
+    }
+
+
+    QTextStream textStream(&textFile);
+
+    while (true)  // textstream to read from file
+    {
+        QString line = textStream.readLine();
+
+        if (line.isNull())
+            break;
+        else
+            stringList.append(line); // populate the stringlist
+            ui->pushButton_4->setEnabled(true);
+    }
+
+    QModelIndex index = ui->listView->currentIndex();
+    int itemid = index.row();
+
+    //qDebug() << itemid;
+    //qDebug() << stringList;
+
+    stringList.removeAt(itemid);
+
+    //qDebug() << stringList;
+
+    QFile file(txtFileStorage);
+        if (file.open(QIODevice::Append | QIODevice::Text))
+        {
+            file.resize(0);
+            QTextStream in(&file);
+
+                 if (in.atEnd())
+                 {
+                     for(int i = 0; i < stringList.count(); ++i)
+                     {
+                         in << stringList[i] << endl;
+                     }
+                 }
+         }
+
+    classFileError(stringList);
+
+    model->setStringList(stringList);  // Populate the model
+
+    ui->listView->setModel(model);  // Glue model and view together
 }
 
 void MainWindow::on_pushButton_23_clicked()
