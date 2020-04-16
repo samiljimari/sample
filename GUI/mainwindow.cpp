@@ -23,6 +23,7 @@
 #include <QPainter>
 #include <QGraphicsItem>
 #include <QBrush>
+#include <QtWidgets>
 
 //^ libraries,classes,and header files
 
@@ -56,6 +57,31 @@ class RectResizer : public SizeGripItem::Resizer // resize class for rectagle
             }
     };
 
+    class PolygonResizer : public SizeGripItem::Resizer // resize class for polygon
+        {
+            public:
+                virtual void operator()(QGraphicsItem* item, const QRectF& rect)
+                {
+                    QGraphicsPolygonItem* polygonItem =
+                        dynamic_cast<QGraphicsPolygonItem*>(item);
+
+                    QRectF itemBoundingRect = item->boundingRect();
+                    float sx = float( rect.width() ) / float( itemBoundingRect.width() );
+                    float sy = float( rect.height() ) / float( itemBoundingRect.height() );
+
+                    QTransform transform;
+                    transform.scale( sx, sy );
+
+                    QPolygonF  oldPolygon = polygonItem->polygon();
+                    QPolygonF newPolygon = oldPolygon * transform;
+
+                    if (polygonItem)
+                    {
+                        //polygonItem->boundingRect(); // fisnish polygon resizer
+                        polygonItem->setPolygon( newPolygon );
+                    }
+                }
+        };
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -407,7 +433,6 @@ void MainWindow::on_pushButton_18_clicked()
     Triangle.append(QPointF(0.,-200));
     Triangle.append(QPointF(200.,0));
 
-
     QModelIndex index = ui->listView->currentIndex();
     QString itemText = index.data(Qt::DisplayRole).toString();
 
@@ -423,7 +448,8 @@ void MainWindow::on_pushButton_18_clicked()
 
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, triangleItem); //assigning class name to rectange
 
-    SizeGripItem* triangleSizeGripItem = new SizeGripItem(new EllipseResizer, triangleItem); //assigning the new coordinate values to the object
+    SizeGripItem* triangleSizeGripItem = new SizeGripItem(new PolygonResizer, triangleItem);
+
 
 }
 
@@ -454,7 +480,7 @@ void MainWindow::on_pushButton_12_clicked()
 
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, pentagonItem); //assigning class name to rectange
 
-    SizeGripItem* triangleSizeGripItem = new SizeGripItem(new EllipseResizer, pentagonItem); //assigning the new coordinate values to the object
+    SizeGripItem* triangleSizeGripItem = new SizeGripItem(new PolygonResizer, pentagonItem); //assigning the new coordinate values to the object
 
 }
 

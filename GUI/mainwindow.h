@@ -141,7 +141,12 @@ private:
     QFileSystemModel *filemodel;
     QGraphicsScene *scene;
     QGraphicsEllipseItem *ellipse;
+    QGraphicsPolygonItem *triangle;
     QGraphicsRectItem *rectangle;
+    QGraphicsPolygonItem *pentagon;
+    QGraphicsPolygonItem *hexagon;
+    QGraphicsPolygonItem *heptagon;
+    QGraphicsPolygonItem *octagon;
     QPixmap image;
     QImage  *imageObject;
     QObject sender;

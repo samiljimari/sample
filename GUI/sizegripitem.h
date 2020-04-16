@@ -43,6 +43,7 @@ class SizeGripItem : public QGraphicsItem
             public:
                 virtual void operator()(QGraphicsItem* item,
                                         const QRectF& rect) = 0;
+
         };
 
         SizeGripItem(Resizer* resizer = 0, QGraphicsItem* parent = 0);
