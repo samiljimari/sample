@@ -53,36 +53,13 @@
      <string>Images:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>60</y>
-      <width>431</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>60</y>
-      <width>121</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Search images in folder:</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>400</y>
-      <width>47</width>
-      <height>13</height>
+      <width>61</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
@@ -94,8 +71,8 @@
      <rect>
       <x>60</x>
       <y>390</y>
-      <width>81</width>
-      <height>31</height>
+      <width>91</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -171,7 +148,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>190</y>
+      <y>160</y>
       <width>551</width>
       <height>191</height>
      </rect>
@@ -207,9 +184,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>430</y>
+      <y>440</y>
       <width>551</width>
-      <height>271</height>
+      <height>261</height>
      </rect>
     </property>
     <property name="alternatingRowColors">
@@ -269,7 +246,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>90</y>
+      <y>60</y>
       <width>161</width>
       <height>41</height>
      </rect>
@@ -282,7 +259,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>140</y>
+      <y>110</y>
       <width>161</width>
       <height>41</height>
      </rect>
@@ -294,21 +271,21 @@
    <widget class="QPushButton" name="pushButton_15">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>150</y>
-      <width>81</width>
+      <x>460</x>
+      <y>120</y>
+      <width>101</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Clear list</string>
+     <string>Clear image list</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_16">
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>90</y>
+      <y>60</y>
       <width>181</width>
       <height>41</height>
      </rect>
@@ -321,7 +298,7 @@
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>140</y>
+      <y>110</y>
       <width>181</width>
       <height>41</height>
      </rect>
@@ -380,6 +357,58 @@
     </property>
     <property name="text">
      <string>Add Octagon</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>360</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add class</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_22">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>400</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Remove Class</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_23">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>360</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sort Ascending</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_24">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>400</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sort Desceding</string>
     </property>
    </widget>
   </widget>

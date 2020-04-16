@@ -135,6 +135,14 @@ private slots:
 
     void on_pushButton_21_clicked();
 
+    void on_pushButton_4_clicked();
+
+    void on_pushButton_22_clicked();
+
+    void on_pushButton_23_clicked();
+
+    void on_pushButton_24_clicked();
+
 private:
     Ui::MainWindow *ui;
     QFileSystemModel *dirmodel;

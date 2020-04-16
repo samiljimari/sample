@@ -77,7 +77,6 @@ class RectResizer : public SizeGripItem::Resizer // resize class for rectagle
 
                     if (polygonItem)
                     {
-                        //polygonItem->boundingRect(); // fisnish polygon resizer
                         polygonItem->setPolygon( newPolygon );
                     }
                 }
@@ -581,4 +580,28 @@ void MainWindow::on_pushButton_21_clicked()
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, octagonItem); //assigning class name to rectange
 
     SizeGripItem* triangleSizeGripItem = new SizeGripItem(new EllipseResizer, octagonItem); //assigning the new coordinate values to the object
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    //Add class to class file
+
+}
+
+void MainWindow::on_pushButton_22_clicked()
+{
+    //Remove class from class file
+
+}
+
+void MainWindow::on_pushButton_23_clicked()
+{
+    //Sort classes Ascending
+
+}
+
+void MainWindow::on_pushButton_24_clicked()
+{
+    //Sort classes Descending
+
 }
