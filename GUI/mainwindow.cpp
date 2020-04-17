@@ -223,11 +223,6 @@ void MainWindow::on_pushButton_11_clicked()  // rectangle shape creator
 
 }
 
-void MainWindow::on_pushButton_clicked() // Save COCO button
-{
-
-}
-
 void MainWindow::on_listView_clicked(const QModelIndex &index)
 {
 
@@ -793,5 +788,29 @@ void MainWindow::on_pushButton_24_clicked()
     model->setStringList(stringList);  // Populate the model
 
     ui->listView->setModel(model);  // Glue model and view together
+
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    // Open and load annotation file
+
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    //Change name of annotation file
+
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    //Save annotation file
+
+}
+
+void MainWindow::on_pushButton_6_clicked()
+{
+    //Copy and paste most reccent shape
 
 }
