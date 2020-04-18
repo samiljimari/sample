@@ -73,6 +73,8 @@ class RectResizer : public SizeGripItem::Resizer // resize class for rectagle
                     QTransform transform;
                     transform.scale( sx, sy );
 
+                    transform.translate(0,0);
+
                     QPolygonF  oldPolygon = polygonItem->polygon();
                     QPolygonF newPolygon = oldPolygon * transform;
 
@@ -170,14 +172,9 @@ void MainWindow::on_pushButton_7_clicked() // image browse button
     ui->listWidget->addItems(images); // display users selection
 }
 
-void MainWindow::on_graphicsView_rubberBandChanged(const QRect &viewportRect, const QPointF &fromScenePoint, const QPointF &toScenePoint)
-{
-
-}
-
 void MainWindow::on_pushButton_8_clicked() //image save button
 {
-
+    //crop and save image, AKA crop the parts which are annotated and save them as separate images into a rar / zips
 }
 
 
@@ -660,7 +657,7 @@ void MainWindow::on_pushButton_22_clicked()
 
     if(!textFile.open(QIODevice::ReadOnly))
     {
-        QMessageBox::information(0,"Error",textFile.errorString()); // if selecting file is interrupted or read-onl throw error
+        QMessageBox::information(0,"Error selecting class, try again!",textFile.errorString()); // if interrupted or read-only throw error
     }
 
 
@@ -794,6 +791,18 @@ void MainWindow::on_pushButton_24_clicked()
 void MainWindow::on_pushButton_clicked()
 {
     // Open and load annotation file
+    // Currently opens annotation files and displays the currently selected annotation file in a Qlabel
+    QString annotation = QFileDialog::getOpenFileName(  //open up file browser with QFileDialog
+                            this,                         //and assign selected file paths to a QStringList of images variable
+                            "Select one or more files to open",
+                            "/home",                      // default directory
+                            "Annotations (*.annotations);;TXT Files(*.txt);;ALL (*.annotations *.txt *.rtf)"); //filetypes elligible
+
+    QFileInfo fi(annotation);
+    qDebug() << fi.fileName() << endl; // shows only file name
+
+    ui->label_4->setText(fi.fileName()); // chnaging qlabel to name of annotation file
+
 
 }
 

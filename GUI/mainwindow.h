@@ -145,6 +145,12 @@ private slots:
 
     void on_label_2_linkActivated(const QString &link);
 
+    void on_pushButton_3_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_6_clicked();
+
 private:
     Ui::MainWindow *ui;
     QFileSystemModel *dirmodel;
