@@ -87,6 +87,11 @@ class RectResizer : public SizeGripItem::Resizer // resize class for rectagle
 
 QString txtFileStorage = "";
 
+struct node {
+    int data;
+    node* next;
+};
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -96,6 +101,8 @@ MainWindow::MainWindow(QWidget *parent) :
     scene = new QGraphicsScene(this);
     ui ->graphicsView->setScene(scene);
     ui->pushButton_4->setEnabled(false);
+    //QGraphicsScene *scene;
+
 }
 
 MainWindow::~MainWindow() //ui termiantion
@@ -153,8 +160,16 @@ void MainWindow::on_pushButton_7_clicked() // image browse button
     QStringList images = QFileDialog::getOpenFileNames(   //open up file browser with QFileDialog
                                 this,                     //and assign selected file paths to a QStringList of images variable
                                 "Select one or more files to open",
-                                "/home",     // default directory
+                                "/Desktop",
                                 "JPG (*.jpg *.jpeg);;PNG (*.png);;ALL (*.jpg *.jpeg *.png)"); //filetypes elligible to be selected by user
+
+//    QStringList images2;
+//    for(int i=0; i < images.count(); i++)
+//    {
+//        QString x = images[i];
+//        QFileInfo y(x);
+//        images2 << y.fileName();
+//    }
 
 
     filemodel = new QFileSystemModel(this); //create a new filemodel
@@ -445,6 +460,7 @@ void MainWindow::on_pushButton_18_clicked()
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, triangleItem); //assigning class name to rectange
 
     SizeGripItem* triangleSizeGripItem = new SizeGripItem(new PolygonResizer, triangleItem);
+    //qDebug() << triangleItem->boundingRect();
 
 
 }
@@ -477,7 +493,7 @@ void MainWindow::on_pushButton_12_clicked()
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, pentagonItem); //assigning class name to rectange
 
     SizeGripItem* pentagonSizeGripItem = new SizeGripItem(new PolygonResizer, pentagonItem); //assigning the new coordinate values to the object
-
+    //qDebug() << pentagonItem->boundingRect();
 }
 
 void MainWindow::on_pushButton_19_clicked()
@@ -815,6 +831,35 @@ void MainWindow::on_pushButton_3_clicked()
 void MainWindow::on_pushButton_2_clicked()
 {
     //Save annotation file
+    //qDebug() << triangleItem->boundingRect(); - can find bounding rect size like this
+    //now need to distinguish shapes and find moved coords
+    //how to find qgraphicitems
+
+    //QList<QGraphicsItem*> graphicsItemList = scene->items();
+
+    //qDebug() << graphicsItemList;
+
+//    QPoint itemposition;
+//    QGraphicsItem *pFocusItem = scene->focusItem();
+
+//    if(scene != NULL // the focus item belongs to a scene
+//        && !scene->views().isEmpty() // that scene is displayed in a view...
+//        && scene->views().first() != NULL // ... which is not null...
+//        && scene->views().first()->viewport() != NULL // ... and has a viewport
+//        )
+//    {
+//        QGraphicsView *v = scene->views().first();
+//        QPointF sceneP = pFocusItem->mapToScene(pFocusItem->boundingRect());
+//        QPoint viewP = v->mapFromScene(sceneP);
+//        itemposition = v->viewport()->mapToGlobal(viewP);
+//    }
+//    else
+//    {
+//        qDebug() << "scene is empty";
+//    }
+
+
+//    qDebug() << itemposition;
 
 }
 

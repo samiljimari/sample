@@ -99,8 +99,6 @@ private slots:
 
     void on_pushButton_7_clicked();
 
-    void on_graphicsView_rubberBandChanged(const QRect &viewportRect, const QPointF &fromScenePoint, const QPointF &toScenePoint);
-
     void on_pushButton_clicked();
 
     void on_pushButton_8_clicked();
@@ -142,8 +140,6 @@ private slots:
     void on_pushButton_23_clicked();
 
     void on_pushButton_24_clicked();
-
-    void on_label_2_linkActivated(const QString &link);
 
     void on_pushButton_3_clicked();
 
