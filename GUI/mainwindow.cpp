@@ -101,7 +101,6 @@ MainWindow::MainWindow(QWidget *parent) :
     scene = new QGraphicsScene(this);
     ui ->graphicsView->setScene(scene);
     ui->pushButton_4->setEnabled(false);
-    //QGraphicsScene *scene;
 
 }
 
@@ -226,7 +225,8 @@ void MainWindow::on_pushButton_11_clicked()  // rectangle shape creator
     blackpen.setWidth(2); // border width
     rectItem->setBrush(brush_color); // using brush color
     rectItem->setPen(blackpen);
-    rectItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
+    rectItem->setFlag(QGraphicsItem::ItemIsMovable);
+    rectItem->setFlag(QGraphicsItem::ItemIsSelectable);
     scene->addItem(rectItem);
 
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, rectItem); //assigning class name to rectangle
@@ -253,6 +253,7 @@ void MainWindow::on_pushButton_10_clicked() //ellipse shape creator
     ellipseItem->setBrush(brush_color);
     ellipseItem->setPen(blackpen);
     ellipseItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
+    ellipseItem->setFlag(QGraphicsItem::ItemIsSelectable);
     scene->addItem(ellipseItem);
 
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, ellipseItem); //assigning class name to rectange
@@ -455,6 +456,7 @@ void MainWindow::on_pushButton_18_clicked()
     triangleItem->setBrush(brush_color); // using brush color
     triangleItem->setPen(blackpen);
     triangleItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
+    triangleItem->setFlag(QGraphicsItem::ItemIsSelectable);
     scene->addItem(triangleItem);
 
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, triangleItem); //assigning class name to rectange
@@ -488,6 +490,7 @@ void MainWindow::on_pushButton_12_clicked()
     pentagonItem->setBrush(brush_color); // using brush color
     pentagonItem->setPen(blackpen);
     pentagonItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
+    pentagonItem->setFlag(QGraphicsItem::ItemIsSelectable);
     scene->addItem(pentagonItem);
 
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, pentagonItem); //assigning class name to rectange
@@ -521,6 +524,7 @@ void MainWindow::on_pushButton_19_clicked()
     hexagonItem->setBrush(brush_color); // using brush color
     hexagonItem->setPen(blackpen);
     hexagonItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
+    hexagonItem->setFlag(QGraphicsItem::ItemIsSelectable);
     scene->addItem(hexagonItem);
 
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, hexagonItem); //assigning class name to rectange
@@ -554,6 +558,7 @@ void MainWindow::on_pushButton_20_clicked()
     heptagonItem->setBrush(brush_color); // using brush color
     heptagonItem->setPen(blackpen);
     heptagonItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
+    heptagonItem->setFlag(QGraphicsItem::ItemIsSelectable);
     scene->addItem(heptagonItem);
 
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, heptagonItem); //assigning class name to rectange
@@ -588,6 +593,7 @@ void MainWindow::on_pushButton_21_clicked()
     octagonItem->setBrush(brush_color); // using brush color
     octagonItem->setPen(blackpen);
     octagonItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
+    octagonItem->setFlag(QGraphicsItem::ItemIsSelectable);
     scene->addItem(octagonItem);
 
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, octagonItem); //assigning class name to rectange
@@ -819,6 +825,16 @@ void MainWindow::on_pushButton_clicked()
 
     ui->label_4->setText(fi.fileName()); // chnaging qlabel to name of annotation file
 
+    qDebug()<< "reading ...";
+           QFile fileIn(annotation);
+           if(fileIn.open(QIODevice::ReadOnly)){
+               QDataStream in(&fileIn);
+               QList<QGraphicsItem *> items = readItems(in);
+               for(QGraphicsItem *item : items){
+                   scene->addItem(item);
+               }
+           }
+
 
 }
 
@@ -831,35 +847,28 @@ void MainWindow::on_pushButton_3_clicked()
 void MainWindow::on_pushButton_2_clicked()
 {
     //Save annotation file
-    //qDebug() << triangleItem->boundingRect(); - can find bounding rect size like this
-    //now need to distinguish shapes and find moved coords
-    //how to find qgraphicitems
 
-    //QList<QGraphicsItem*> graphicsItemList = scene->items();
+   bool ok;
+   QString annotationFileName = QInputDialog::getText(this, tr("Name your annotation file"),
+                                        tr("Desired annotation file name(include file type, eg. .annotations, .txt):"), QLineEdit::Normal,"",&ok);
+   QString isCorrectName;
 
-    //qDebug() << graphicsItemList;
-
-//    QPoint itemposition;
-//    QGraphicsItem *pFocusItem = scene->focusItem();
-
-//    if(scene != NULL // the focus item belongs to a scene
-//        && !scene->views().isEmpty() // that scene is displayed in a view...
-//        && scene->views().first() != NULL // ... which is not null...
-//        && scene->views().first()->viewport() != NULL // ... and has a viewport
-//        )
-//    {
-//        QGraphicsView *v = scene->views().first();
-//        QPointF sceneP = pFocusItem->mapToScene(pFocusItem->boundingRect());
-//        QPoint viewP = v->mapFromScene(sceneP);
-//        itemposition = v->viewport()->mapToGlobal(viewP);
-//    }
-//    else
-//    {
-//        qDebug() << "scene is empty";
-//    }
+   if (ok && !annotationFileName.isEmpty())
+   {
+      isCorrectName = annotationFileName;
+   }
 
 
-//    qDebug() << itemposition;
+   qDebug()<< "writing ...";
+   QFile fileOut(isCorrectName);
+   if(fileOut.open(QIODevice::WriteOnly))
+   {
+        QDataStream out(&fileOut);
+        saveItems(scene->items(), out);
+        fileOut.close();
+        qDebug()<<"items saved";
+   }
+
 
 }
 
@@ -867,4 +876,10 @@ void MainWindow::on_pushButton_6_clicked()
 {
     //Copy and paste most reccent shape
 
+}
+
+void MainWindow::on_pushButton_9_clicked()
+{
+    //clear scene button
+    scene->clear();
 }
