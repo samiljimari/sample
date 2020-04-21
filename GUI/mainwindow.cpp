@@ -875,6 +875,88 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_pushButton_6_clicked()
 {
     //Copy and paste most reccent shape
+    QList <QGraphicsItem* >listCopiedItems =  scene->selectedItems();
+    qDebug() << listCopiedItems;
+
+    if (listCopiedItems.size() == 0 ) {
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error","You have not selected a shape! Please click on a shape to select it");
+        messageBox.setFixedSize(500,200);
+        return;
+      }
+
+      QGraphicsItem* item = listCopiedItems.first();
+
+      QGraphicsEllipseItem* elitem = dynamic_cast<QGraphicsEllipseItem*>(item);
+        if (elitem) {  // if its not NULL it means it was a QGraphicsEllipseItem.
+            QModelIndex index = ui->listView->currentIndex();
+            QString itemText = index.data(Qt::DisplayRole).toString();
+
+
+            QRectF thesize = elitem->rect();
+            QPen pen = elitem->pen();
+            QBrush brush = elitem->brush();
+            QGraphicsEllipseItem* item1 = new QGraphicsEllipseItem(QRectF(thesize));
+            item1->setBrush(brush); // using brush color
+            item1->setPen(pen);
+            item1->setRect(thesize);
+            item1->setFlag(QGraphicsItem::ItemIsMovable);
+            item1->setFlag(QGraphicsItem::ItemIsSelectable);
+
+            scene->addItem(item1);
+
+            QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, item1); //assigning class name to rectangle
+
+            SizeGripItem* rect2SizeGripItem = new SizeGripItem(new EllipseResizer, item1);
+          return; // leave
+        }
+
+        QGraphicsRectItem* rectitem = dynamic_cast<QGraphicsRectItem*>(item);
+        if (rectitem) {  // if its not NULL it means it was a QGraphicsRectItem.
+            QModelIndex index = ui->listView->currentIndex();
+            QString itemText = index.data(Qt::DisplayRole).toString();
+
+
+            QRectF thesize = rectitem->rect();
+            QPen pen = rectitem->pen();
+            QBrush brush = rectitem->brush();
+            QGraphicsRectItem* item2 = new QGraphicsRectItem(QRectF(thesize));
+            item2->setBrush(brush); // using brush color
+            item2->setPen(pen);
+            item2->setRect(thesize);
+            item2->setFlag(QGraphicsItem::ItemIsMovable);
+            item2->setFlag(QGraphicsItem::ItemIsSelectable);
+
+            scene->addItem(item2);
+
+            QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, item2); //assigning class name to rectangle
+
+            SizeGripItem* rect2SizeGripItem = new SizeGripItem(new RectResizer, item2);
+          return;
+        }
+
+        QGraphicsPolygonItem* polyitem = dynamic_cast<QGraphicsPolygonItem*>(item);
+        if (polyitem) {  // if its not NULL it means it was a QGraphicsRectItem.
+            QModelIndex index = ui->listView->currentIndex();
+            QString itemText = index.data(Qt::DisplayRole).toString();
+
+            QPolygonF thesize = polyitem->polygon();
+            QPen pen = polyitem->pen();
+            QBrush brush = polyitem->brush();
+            QGraphicsPolygonItem* item3 = new QGraphicsPolygonItem(QPolygonF(thesize));
+            item3->setBrush(brush); // using brush color
+            item3->setPen(pen);
+            item3->setPolygon(thesize);
+            item3->setFlag(QGraphicsItem::ItemIsMovable);
+            item3->setFlag(QGraphicsItem::ItemIsSelectable);
+
+            scene->addItem(item3);
+
+            QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, item3); //assigning class name to rectangle
+
+            SizeGripItem* polySizeGripItem = new SizeGripItem(new PolygonResizer, item3);
+          return;
+        }
 
 }
 
