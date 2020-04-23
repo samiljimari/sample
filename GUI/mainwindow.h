@@ -105,10 +105,6 @@ private slots:
 
     void on_pushButton_11_clicked();
 
-    void on_listView_clicked(const QModelIndex &index);
-
-    void populateScene();
-
     void on_pushButton_10_clicked();
 
     void on_pushButton_13_clicked();
@@ -148,6 +144,8 @@ private slots:
     void on_pushButton_9_clicked();
 
     void on_pushButton_8_clicked();
+
+    void on_pushButton_25_clicked();
 
 private:
     Ui::MainWindow *ui;

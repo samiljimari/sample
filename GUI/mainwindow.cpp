@@ -162,14 +162,6 @@ void MainWindow::on_pushButton_7_clicked() // image browse button
                                 "/Desktop",
                                 "JPG (*.jpg *.jpeg);;PNG (*.png);;ALL (*.jpg *.jpeg *.png)"); //filetypes elligible to be selected by user
 
-//    QStringList images2;
-//    for(int i=0; i < images.count(); i++)
-//    {
-//        QString x = images[i];
-//        QFileInfo y(x);
-//        images2 << y.fileName();
-//    }
-
 
     filemodel = new QFileSystemModel(this); //create a new filemodel
 
@@ -201,11 +193,6 @@ void MainWindow::on_listWidget_clicked(const QModelIndex &index) // list widget 
     ui->graphicsView->setScene(scene); // fill graphics view with the image
 }
 
-void MainWindow::populateScene() // adding rectangle to the image
-{
-
-}
-
 void MainWindow::on_pushButton_11_clicked()  // rectangle shape creator
 {
     QModelIndex index = ui->listView->currentIndex();
@@ -228,11 +215,6 @@ void MainWindow::on_pushButton_11_clicked()  // rectangle shape creator
 
     SizeGripItem* rectSizeGripItem = new SizeGripItem(new RectResizer, rectItem); //assigning the new coordinate values to the object
     rectSizeGripItem->boundingRect();
-
-}
-
-void MainWindow::on_listView_clicked(const QModelIndex &index)
-{
 
 }
 
@@ -1062,4 +1044,25 @@ void MainWindow::on_pushButton_8_clicked()
     QGraphicsItem* item = listCopiedItems.first();
 
     scene->removeItem(item);
+}
+
+void MainWindow::on_pushButton_25_clicked()
+{
+    QList <QGraphicsItem* >listCopiedItems =  scene->selectedItems();
+    qDebug() << listCopiedItems;
+
+    if (listCopiedItems.size() == 0 ) {
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error","You have not selected a shape! Please click on a shape to select it");
+        messageBox.setFixedSize(500,200);
+        return;
+      }
+
+    QGraphicsItem* item = listCopiedItems.first();
+
+    QSpinBox spinBox;
+
+    int deg = ui->spinBox->value();
+
+    item->setRotation(item->rotation() + deg);
 }
