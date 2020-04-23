@@ -247,7 +247,7 @@
      <rect>
       <x>1080</x>
       <y>740</y>
-      <width>101</width>
+      <width>91</width>
       <height>41</height>
      </rect>
     </property>
@@ -258,9 +258,9 @@
    <widget class="QPushButton" name="pushButton_21">
     <property name="geometry">
      <rect>
-      <x>1190</x>
+      <x>1180</x>
       <y>740</y>
-      <width>91</width>
+      <width>81</width>
       <height>41</height>
      </rect>
     </property>
@@ -362,9 +362,9 @@
    <widget class="QPushButton" name="pushButton_6">
     <property name="geometry">
      <rect>
-      <x>1290</x>
+      <x>1270</x>
       <y>740</y>
-      <width>191</width>
+      <width>161</width>
       <height>41</height>
      </rect>
     </property>
@@ -409,6 +409,19 @@
     </property>
     <property name="text">
      <string>Clear scene</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_8">
+    <property name="geometry">
+     <rect>
+      <x>1440</x>
+      <y>740</y>
+      <width>81</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Delete shape</string>
     </property>
    </widget>
   </widget>

@@ -211,6 +211,8 @@ void MainWindow::on_pushButton_11_clicked()  // rectangle shape creator
     QModelIndex index = ui->listView->currentIndex();
     QString itemText = index.data(Qt::DisplayRole).toString();
 
+    QPainter painter;
+
     QGraphicsRectItem* rectItem = new QGraphicsRectItem(QRectF(0, 0, 320, 240));
     QColor brush_color(Qt::blue); //fill color
     brush_color.setAlpha(50); // alpha index makes brush color more opaque
@@ -225,6 +227,7 @@ void MainWindow::on_pushButton_11_clicked()  // rectangle shape creator
     QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, rectItem); //assigning class name to rectangle
 
     SizeGripItem* rectSizeGripItem = new SizeGripItem(new RectResizer, rectItem); //assigning the new coordinate values to the object
+    rectSizeGripItem->boundingRect();
 
 }
 
@@ -1039,4 +1042,24 @@ void MainWindow::on_pushButton_9_clicked()
 {
     //clear scene button
     scene->clear();
+}
+
+void MainWindow::on_pushButton_8_clicked()
+{
+    //Delete shape button
+
+    //Copy and paste most reccent shape
+    QList <QGraphicsItem* >listCopiedItems =  scene->selectedItems();
+    qDebug() << listCopiedItems;
+
+    if (listCopiedItems.size() == 0 ) {
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error","You have not selected a shape! Please click on a shape to select it");
+        messageBox.setFixedSize(500,200);
+        return;
+      }
+
+    QGraphicsItem* item = listCopiedItems.first();
+
+    scene->removeItem(item);
 }
