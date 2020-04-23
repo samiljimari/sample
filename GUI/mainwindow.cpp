@@ -26,7 +26,7 @@
 #include <QtWidgets>
 #include <global.h>
 
-//^ libraries,classes,and header files
+//^ libraries and header files
 
 class RectResizer : public SizeGripItem::Resizer // resize class for rectagle
     {
@@ -185,13 +185,6 @@ void MainWindow::on_pushButton_7_clicked() // image browse button
 
     ui->listWidget->addItems(images); // display users selection
 }
-
-void MainWindow::on_pushButton_8_clicked() //image save button
-{
-    //crop and save image, AKA crop the parts which are annotated and save them as separate images into a rar / zips
-}
-
-
 
 void MainWindow::on_listWidget_clicked(const QModelIndex &index) // list widget / image file pane
 {
@@ -813,9 +806,8 @@ void MainWindow::on_pushButton_24_clicked()
 void MainWindow::on_pushButton_clicked()
 {
     // Open and load annotation file
-    // Currently opens annotation files and displays the currently selected annotation file in a Qlabel
     QString annotation = QFileDialog::getOpenFileName(  //open up file browser with QFileDialog
-                            this,                         //and assign selected file paths to a QStringList of images variable
+                            this,                         //and assign selected file paths to a QStringList of annotation variable
                             "Select one or more files to open",
                             "/home",                      // default directory
                             "Annotations (*.annotations);;TXT Files(*.txt);;ALL (*.annotations *.txt *.rtf)"); //filetypes elligible
@@ -830,8 +822,37 @@ void MainWindow::on_pushButton_clicked()
            if(fileIn.open(QIODevice::ReadOnly)){
                QDataStream in(&fileIn);
                QList<QGraphicsItem *> items = readItems(in);
+               std::reverse(items.begin(),items.end());
                for(QGraphicsItem *item : items){
                    scene->addItem(item);
+
+//                   QGraphicsEllipseItem* elitem = dynamic_cast<QGraphicsEllipseItem*>(item);
+//                     if (elitem) {  // if its not NULL it means it was a QGraphicsEllipseItem.
+
+//                         SizeGripItem* ellipseSizeGripItem = new SizeGripItem(new EllipseResizer, item);
+
+//                     }
+//                   QGraphicsRectItem* rectitem = dynamic_cast<QGraphicsRectItem*>(item);
+//                       if (rectitem) {  // if its not NULL it means it was a QGraphicsEllipseItem.
+
+//                           SizeGripItem* rectSizeGripItem = new SizeGripItem(new RectResizer, item);
+
+//                       }
+//                   QGraphicsPolygonItem* polygonitem = dynamic_cast<QGraphicsPolygonItem*>(item);
+//                        if (polygonitem) {  // if its not NULL it means it was a QGraphicsEllipseItem.
+
+//                            QPolygonF thesize = polygonitem->polygon();
+//                            QPen pen = polygonitem->pen();
+//                            QBrush brush = polygonitem->brush();
+//                            QGraphicsPolygonItem* item3 = new QGraphicsPolygonItem(QPolygonF(thesize));
+//                            item3->setBrush(brush); // using brush color
+//                            item3->setPen(pen);
+//                            item3->setPolygon(thesize);
+
+//                           SizeGripItem* polygonSizeGripItem = new SizeGripItem(new PolygonResizer, item);
+
+//                       }
+
                }
            }
 
@@ -841,6 +862,35 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_pushButton_3_clicked()
 {
     //Change name of annotation file
+
+    QString annotation = QFileDialog::getOpenFileName(  //open up file browser with QFileDialog
+                            this,                         //and assign selected file paths to a QStringList of annotation variable
+                            "Select a file to rename",
+                            "/home",                      // default directory
+                            "Annotations (*.annotations);;TXT Files(*.txt);;ALL (*.annotations *.txt *.rtf)"); //filetypes elligible
+
+
+
+    bool ok;
+    QString newAnnotationFileName = QInputDialog::getText(this, tr("Name your annotation file"),
+                                         tr("Desired annotation file name(include file type, eg. .annotations, .txt):"), QLineEdit::Normal,"",&ok);
+
+    QString isCorrectName;
+
+    if (ok && !newAnnotationFileName.isEmpty())
+    {
+       isCorrectName = newAnnotationFileName;
+    }
+
+
+
+    QFileInfo fi(annotation); // turn filepath string into usable filo info type
+    QString path = fi.absolutePath(); //get path without file name
+    //qDebug() << path;
+    QFile::copy(annotation,path + "/" + isCorrectName ); //copy initial file into new file
+
+    QFile file (annotation); //select and delete old file after copy is finished
+    file.remove();
 
 }
 
@@ -861,6 +911,31 @@ void MainWindow::on_pushButton_2_clicked()
 
    qDebug()<< "writing ...";
    QFile fileOut(isCorrectName);
+
+   QString changeName;
+
+   if(fileOut.exists())
+   {
+       changeName = QInputDialog::getText(this, tr("File name exists, overwrite?"),
+                                            tr("File name already exists, do you wish to overwrite it with new data? (y/n)"), QLineEdit::Normal,"",&ok);
+   }
+
+   if(changeName == "" || changeName  == "y" || changeName  == "Y")
+   {
+       qDebug() << "alrighty";
+   }
+
+   if(changeName == "n" || changeName  == "N" )
+   {
+       QMessageBox msgBox;
+       msgBox.setText("Info");
+       msgBox.setInformativeText("Operation has been aborted, your file has not been saved, please attempt to save the file under different name");
+       msgBox.exec();
+       return;
+   }
+
+
+
    if(fileOut.open(QIODevice::WriteOnly))
    {
         QDataStream out(&fileOut);
