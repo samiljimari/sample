@@ -454,23 +454,27 @@
      <x>0</x>
      <y>0</y>
      <width>1539</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuEXIT">
-    <property name="title">
-     <string>options</string>
-    </property>
-    <addaction name="actionExit"/>
-   </widget>
    <widget class="QMenu" name="menuinfo">
-    <property name="title">
-     <string>info</string>
+    <property name="geometry">
+     <rect>
+      <x>339</x>
+      <y>101</y>
+      <width>143</width>
+      <height>72</height>
+     </rect>
     </property>
-    <addaction name="actionread_me_2"/>
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <property name="icon">
+     <iconset resource="resource.qrc">
+      <normaloff>:/rec/help.png</normaloff>:/rec/help.png</iconset>
+    </property>
     <addaction name="actionabout_2"/>
    </widget>
-   <addaction name="menuEXIT"/>
    <addaction name="menuinfo"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -482,39 +486,22 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionExit">
-   <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/imgs/honklhonk.jpg</normaloff>:/imgs/honklhonk.jpg</iconset>
-   </property>
-   <property name="text">
-    <string>Exit</string>
-   </property>
-  </action>
-  <action name="actionread_me">
-   <property name="text">
-    <string>read me</string>
-   </property>
-  </action>
-  <action name="actionabout">
-   <property name="text">
-    <string>about</string>
-   </property>
-  </action>
-  <action name="actionread_me_2">
-   <property name="text">
-    <string>read me</string>
-   </property>
-  </action>
   <action name="actionabout_2">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/rec/readme.png</normaloff>:/rec/readme.png</iconset>
+   </property>
    <property name="text">
-    <string>about</string>
+    <string>readme</string>
+   </property>
+   <property name="toolTip">
+    <string>open a readme document with useful tips</string>
    </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="resource.qrc"/>
  </resources>
  <connections/>
 </ui>

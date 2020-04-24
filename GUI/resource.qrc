@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/rec">
+        <file>help.png</file>
+        <file>readme.png</file>
+    </qresource>
+</RCC>

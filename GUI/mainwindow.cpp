@@ -25,6 +25,7 @@
 #include <QBrush>
 #include <QtWidgets>
 #include <global.h>
+#include <QProcess>
 
 //^ libraries and header files
 
@@ -1065,4 +1066,10 @@ void MainWindow::on_pushButton_25_clicked()
     int deg = ui->spinBox->value();
 
     item->setRotation(item->rotation() + deg);
+}
+
+void MainWindow::on_actionabout_2_triggered()
+{
+     QProcess *proc = new QProcess(this);
+     proc->start("notepad.exe C:/Users/Sami Ljimari/Documents/GitHub/SDI/GUI/readme.txt");
 }

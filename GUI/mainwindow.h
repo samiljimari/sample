@@ -94,6 +94,8 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void loadFile(const QString &fileName);
+
 private slots:
     void on_pushButton_5_clicked();
 
@@ -146,6 +148,8 @@ private slots:
     void on_pushButton_8_clicked();
 
     void on_pushButton_25_clicked();
+
+    void on_actionabout_2_triggered();
 
 private:
     Ui::MainWindow *ui;
