@@ -373,6 +373,7 @@ static QList<QGraphicsItem *> readItems(QDataStream & in){
     return  items;
 }
 
+
 #endif // FUNCTIONS_H
 
 

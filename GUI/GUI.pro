@@ -27,16 +27,20 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    sizegripitem.cpp
+    sizegripitem.cpp \
+    readmedialog.cpp
 
 HEADERS += \
         mainwindow.h \
     functions.h \
     sizegripitem.h \
-    global.h
+    global.h \
+    readmedialog.h \
+    readme.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    readmedialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

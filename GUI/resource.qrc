@@ -2,5 +2,6 @@
     <qresource prefix="/rec">
         <file>help.png</file>
         <file>readme.png</file>
+        <file>readme.txt</file>
     </qresource>
 </RCC>

@@ -26,6 +26,7 @@
 #include <QtWidgets>
 #include <global.h>
 #include <QProcess>
+#include <readmedialog.h>
 
 //^ libraries and header files
 
@@ -1070,6 +1071,11 @@ void MainWindow::on_pushButton_25_clicked()
 
 void MainWindow::on_actionabout_2_triggered()
 {
-     QProcess *proc = new QProcess(this);
-     proc->start("notepad.exe C:/Users/Sami Ljimari/Documents/GitHub/SDI/GUI/readme.txt");
+     //QProcess *proc = new QProcess(this);
+     Q_INIT_RESOURCE(resource);
+     //proc->start("notepad.exe qrc:/rec/readme.txt");
+    readmeDialog readmedialog;
+    readmedialog.setModal(true);
+    readmedialog.exec();
+
 }
