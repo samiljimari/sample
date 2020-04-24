@@ -5,5 +5,6 @@
 
 extern QString txtFileStorage;
 extern QGraphicsItem* coordItem;
+extern QString imgPath;
 
 #endif // GLOBAL_H

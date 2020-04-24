@@ -88,6 +88,7 @@ class RectResizer : public SizeGripItem::Resizer // resize class for rectagle
         };
 
 QString txtFileStorage = "";
+QString imgPath = "";
 
 struct node {
     int data;
@@ -185,6 +186,7 @@ void MainWindow::on_listWidget_clicked(const QModelIndex &index) // list widget 
     QList <QListWidgetItem*> items=ui->listWidget->selectedItems(); //input file paths from list widget to QList
 
     QString imagePath = listTraversal(items,"0"); // Use traversal function on selected item from list widget
+    imgPath = imagePath;
 
     scene = new QGraphicsScene(this); // create new graphics scene
 
@@ -218,27 +220,6 @@ void MainWindow::on_pushButton_11_clicked()  // rectangle shape creator
     SizeGripItem* rectSizeGripItem = new SizeGripItem(new RectResizer, rectItem); //assigning the new coordinate values to the object
     rectSizeGripItem->boundingRect();
 
-}
-
-void MainWindow::on_pushButton_10_clicked() //ellipse shape creator
-{
-    QModelIndex index = ui->listView->currentIndex();
-    QString itemText = index.data(Qt::DisplayRole).toString();
-
-    QGraphicsEllipseItem* ellipseItem = new QGraphicsEllipseItem(QRectF(0, 0, 200, 200));
-    QColor brush_color(Qt::red); //fill color
-    brush_color.setAlpha(50); // alpha index makes brush color more opaque
-    QPen blackpen(Qt::black); //border color
-    blackpen.setWidth(2); // border width
-    ellipseItem->setBrush(brush_color);
-    ellipseItem->setPen(blackpen);
-    ellipseItem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
-    ellipseItem->setFlag(QGraphicsItem::ItemIsSelectable);
-    scene->addItem(ellipseItem);
-
-    QGraphicsTextItem *RectText = new QGraphicsTextItem(itemText, ellipseItem); //assigning class name to rectange
-
-    SizeGripItem* ellipseSizeGripItem = new SizeGripItem(new EllipseResizer, ellipseItem); //assigning the new coordinate values to the object
 }
 
 void MainWindow::on_pushButton_13_clicked()   //sort images ascending button
@@ -331,7 +312,7 @@ void MainWindow::on_pushButton_16_clicked()
             return false;
         return left.first()<right.first();
     });
-    qDebug() << combinedList;
+    //qDebug() << combinedList;
 
     QStringList orderedOutput;
 
@@ -800,9 +781,10 @@ void MainWindow::on_pushButton_clicked()
                             "Annotations (*.annotations);;TXT Files(*.txt);;ALL (*.annotations *.txt *.rtf)"); //filetypes elligible
 
     QFileInfo fi(annotation);
-    qDebug() << fi.fileName() << endl; // shows only file name
+    //qDebug() << fi.fileName() << endl; // shows only file name
 
     ui->label_4->setText(fi.fileName()); // chnaging qlabel to name of annotation file
+    scene->clear();
 
     qDebug()<< "reading ...";
            QFile fileIn(annotation);
@@ -810,38 +792,67 @@ void MainWindow::on_pushButton_clicked()
                QDataStream in(&fileIn);
                QList<QGraphicsItem *> items = readItems(in);
                std::reverse(items.begin(),items.end());
+
                for(QGraphicsItem *item : items){
-                   scene->addItem(item);
 
-//                   QGraphicsEllipseItem* elitem = dynamic_cast<QGraphicsEllipseItem*>(item);
-//                     if (elitem) {  // if its not NULL it means it was a QGraphicsEllipseItem.
+                   QGraphicsRectItem* rectitem = dynamic_cast<QGraphicsRectItem*>(item);
 
-//                         SizeGripItem* ellipseSizeGripItem = new SizeGripItem(new EllipseResizer, item);
+                       if (rectitem){
 
-//                     }
-//                   QGraphicsRectItem* rectitem = dynamic_cast<QGraphicsRectItem*>(item);
-//                       if (rectitem) {  // if its not NULL it means it was a QGraphicsEllipseItem.
+                           QColor expectedBrush = (Qt::blue);
+                           expectedBrush.setAlpha(50);
+                           QRectF thesize = rectitem->boundingRect();
+                           QPen pen = rectitem->pen();
+                           QBrush brush = rectitem->brush();
+                           if(brush != expectedBrush)
+                           {
+                               //qDebug()<< "yeah its gray";
+                               continue;
+                           }
+                           //qDebug()<<brush;
+                           //qDebug()<<"probably blue";
+                           QGraphicsRectItem* rectitem = new QGraphicsRectItem(QRectF(thesize));
+                           rectitem->setBrush(brush); // using brush color
+                           rectitem->setPen(pen);
+                           rectitem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
+                           rectitem->setFlag(QGraphicsItem::ItemIsSelectable);
+                           scene->addItem(rectitem);
 
-//                           SizeGripItem* rectSizeGripItem = new SizeGripItem(new RectResizer, item);
+                           SizeGripItem* rectSizeGripItem = new SizeGripItem(new RectResizer, rectitem);
 
-//                       }
-//                   QGraphicsPolygonItem* polygonitem = dynamic_cast<QGraphicsPolygonItem*>(item);
-//                        if (polygonitem) {  // if its not NULL it means it was a QGraphicsEllipseItem.
+                       }
+                   QGraphicsPolygonItem* polygonitem = dynamic_cast<QGraphicsPolygonItem*>(item);
+                        if (polygonitem) {
+                            QPolygonF thesize = polygonitem->polygon();
+                            QPen pen = polygonitem->pen();
+                            QBrush brush = polygonitem->brush();
+                            QGraphicsPolygonItem* polygonitem = new QGraphicsPolygonItem(QPolygonF(thesize));
+                            polygonitem->setBrush(brush); // using brush color
+                            polygonitem->setPen(pen);
+                            polygonitem->setPolygon(thesize);
+                            polygonitem->setFlag(QGraphicsItem::ItemIsMovable); // making the object draggable across graphics view
+                            polygonitem->setFlag(QGraphicsItem::ItemIsSelectable);
+                            scene->addItem(polygonitem);
 
-//                            QPolygonF thesize = polygonitem->polygon();
-//                            QPen pen = polygonitem->pen();
-//                            QBrush brush = polygonitem->brush();
-//                            QGraphicsPolygonItem* item3 = new QGraphicsPolygonItem(QPolygonF(thesize));
-//                            item3->setBrush(brush); // using brush color
-//                            item3->setPen(pen);
-//                            item3->setPolygon(thesize);
 
-//                           SizeGripItem* polygonSizeGripItem = new SizeGripItem(new PolygonResizer, item);
+                           SizeGripItem* polygonSizeGripItem = new SizeGripItem(new PolygonResizer, polygonitem);
 
-//                       }
+                       }
+
+                        else if(items.at(0))
+                        {
+                            scene->addItem(item);
+                        }
+
+
+                            else
+                            {
+                                continue;
+                            }
+                        }
 
                }
-           }
+
 
 
 }
@@ -927,6 +938,8 @@ void MainWindow::on_pushButton_2_clicked()
    {
         QDataStream out(&fileOut);
         saveItems(scene->items(), out);
+        QTextStream stream( &fileOut );
+            stream << imgPath << endl;
         fileOut.close();
         qDebug()<<"items saved";
    }
@@ -1034,7 +1047,7 @@ void MainWindow::on_pushButton_8_clicked()
 
     //Copy and paste most reccent shape
     QList <QGraphicsItem* >listCopiedItems =  scene->selectedItems();
-    qDebug() << listCopiedItems;
+    //qDebug() << listCopiedItems;
 
     if (listCopiedItems.size() == 0 ) {
         QMessageBox messageBox;
@@ -1048,10 +1061,10 @@ void MainWindow::on_pushButton_8_clicked()
     scene->removeItem(item);
 }
 
-void MainWindow::on_pushButton_25_clicked()
+void MainWindow::on_pushButton_25_clicked() // rotate button
 {
     QList <QGraphicsItem* >listCopiedItems =  scene->selectedItems();
-    qDebug() << listCopiedItems;
+    //qDebug() << listCopiedItems;
 
     if (listCopiedItems.size() == 0 ) {
         QMessageBox messageBox;
@@ -1071,9 +1084,9 @@ void MainWindow::on_pushButton_25_clicked()
 
 void MainWindow::on_actionabout_2_triggered()
 {
-     //QProcess *proc = new QProcess(this);
-     Q_INIT_RESOURCE(resource);
-     //proc->start("notepad.exe qrc:/rec/readme.txt");
+
+    Q_INIT_RESOURCE(resource);
+
     readmeDialog readmedialog;
     readmedialog.setModal(true);
     readmedialog.exec();
